@@ -1,5 +1,5 @@
+<style src="./index.css" scoped />
+
 <template>
-	<div>
-		test
-	</div>
+  <div class="test">Hello World</div>
 </template>

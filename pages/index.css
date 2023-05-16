@@ -1,0 +1,5 @@
+.test {
+  background-color: var(--color-light-grey);
+  padding-inline: var(--size-md);
+  padding-block: var(--size-3xl);
+}

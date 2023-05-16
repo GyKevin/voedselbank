@@ -1,3 +1,9 @@
 .container {
-  background-color: red;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.content {
+  width: clamp(var(--min-screen-size), 100%, var(--max-screen-size));
 }
