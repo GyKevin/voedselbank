@@ -1,8 +1,5 @@
 <template>
   <div>
-	<NuxtLayout name="layout">
-		test
-	</NuxtLayout>
-	<!-- 123// -->
+    <NuxtLayout name="layout"> test </NuxtLayout>
   </div>
 </template>

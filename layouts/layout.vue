@@ -1,4 +1,4 @@
-<style src="./layout.module.css" scoped />
+<style src="./layout.css" scoped />
 
 <script>
 export default {
@@ -12,11 +12,7 @@ export default {
 </script>
 
 <template>
-  <div
-    :class="{
-      name: bool,
-    }"
-  >
+  <div class="container">
     <slot />
   </div>
 </template>
