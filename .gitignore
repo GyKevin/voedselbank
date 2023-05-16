@@ -1,4 +1,11 @@
+# editors
+**/.vscode
+**/.idea
+
+# Node items
 node_modules
+
+# NUXT items
 *.log*
 .nuxt
 .nitro
