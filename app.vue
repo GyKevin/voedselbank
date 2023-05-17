@@ -1,5 +1,15 @@
+<script>
+import index from "./pages/index.vue";
+
+export default {
+  components: {
+    index,
+  },
+};
+</script>
+
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <NuxtLayout name="layout">
+    <index />
+  </NuxtLayout>
 </template>
