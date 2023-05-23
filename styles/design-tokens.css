@@ -1,0 +1,57 @@
+:root {
+  /* Sizes */
+  --size-4xs: 1px;
+  --size-3xs: 2px;
+  --size-2xs: 4px;
+  --size-xs: 8px;
+  --size-sm: 14px;
+  --size-md: 18px;
+  --size-lg: 24px;
+  --size-xl: 32px;
+  --size-2xl: 48px;
+  --size-3xl: 72px;
+  --size-4xl: 96px;
+
+  /* font sizes */
+  --font-size-1: 1rem;
+  --font-size-2: 1.618rem;
+  --font-size-3: 2.618rem;
+  --font-size-4: 4.236rem;
+  --font-size-5: 6.854rem;
+  --font-size-6: 11.089rem;
+
+  /* colors */
+  --color-background: hsl(0, 0%, 100%);
+  --color-text: hsl(0, 0%, 0%);
+  --color-primary: hsl(146, 55%, 29%);
+
+  /* generic colors (these are optional use) */
+  --color-light-grey: hsl(0, 0%, 96%);
+  --color-grey: hsl(0, 0%, 65%);
+  --color-dark-grey: hsl(0, 0%, 40%);
+  --color-red: hsl(0, 85%, 50%);
+  --color-orange: hsl(30, 85%, 50%);
+  --color-yellow: hsl(60, 85%, 50%);
+  --color-light-green: hsl(120, 85%, 50%);
+  --color-green: hsl(120, 85%, 35%);
+  --color-dark-green: hsl(120, 85%, 20%);
+  --color-light-blue: hsl(180, 85%, 50%);
+  --color-blue: hsl(210, 85%, 50%);
+  --color-dark-blue: hsl(240, 85%, 50%);
+  --color-purple: hsl(270, 85%, 50%);
+  --color-light-pink: hsl(300, 85%, 50%);
+  --color-pink: hsl(315, 85%, 50%);
+  --color-dark-pink: hsl(330, 85%, 50%);
+
+  /* screen size */
+  --min-screen-size: 576px;
+  --max-screen-size: 1200px;
+
+  /*
+    this is where you define global styles
+
+    eg:
+    for button border you will add
+    --button-border: 12px;
+  */
+}
