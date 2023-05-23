@@ -1,9 +1,22 @@
 .container {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .content {
+  margin-inline: auto;
+  padding-inline: var(--content-padding);
   width: clamp(var(--min-screen-size), 100%, var(--max-screen-size));
+}
+
+.header {
+  height: var(--header-height);
+  background-color: var(--color-light-grey);
+  margin-block-end: var(--size-3xl);
+}
+
+.open {
+  background-color: red;
+  padding: 1rem;
 }

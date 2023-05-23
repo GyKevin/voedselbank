@@ -1,7 +1,13 @@
 <style src="./layout.css" scoped />
 
 <script>
+import { clsx } from "clsx";
+
 export default {
+  // setup
+  setup() {
+    return { clsx };
+  },
   // state
   data() {
     return {
@@ -15,12 +21,12 @@ export default {
     },
   },
 };
-
-// if (Window.innerWidth <= 800) toggleMenu();
 </script>
 
 <template>
-  <div class="container">
+  <div class="header"></div>
+  <div>
+    <div :class="clsx('sidebar', menuOpen && 'open', !menuOpen && 'closed')"></div>
     <div class="content">
       <slot />
     </div>
