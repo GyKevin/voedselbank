@@ -1,0 +1,15 @@
+<template>
+    <div>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Prijs</th>
+                <th>Actie</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</template>
