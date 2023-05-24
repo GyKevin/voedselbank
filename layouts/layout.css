@@ -10,21 +10,8 @@
 }
 
 .sidebar {
-  height: calc(100vh - var(--header-height));
-  width: var(--sidebar-width);
-  position: relative;
-}
-.sidebar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 24px;
-  height: 48px;
-  transform: translateX(100%);
-  background-color: transparent;
-  border-top-left-radius: 25px;
-  box-shadow: 0 -25px 0 0 var(--color-light-grey);
+  height: 100vh;
+  width: var(--sidebar-width);	
 }
 
 .content {
@@ -32,6 +19,7 @@
   padding-inline: var(--content-padding);
   width: clamp(var(--min-screen-size), 100%, var(--max-screen-size));
   margin-block-start: var(--size-3xl);
+  overflow-y: auto;
 }
 
 .header {

@@ -24,7 +24,7 @@ export default {
 </script>
 
 <template>
-  <div class="header"></div>
+  <!-- <div class="header"></div> -->
   <div class="main">
     <div :class="clsx('sidebar', menuOpen && 'open', !menuOpen && 'closed')"></div>
     <div class="content">
