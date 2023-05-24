@@ -1,7 +1,32 @@
 <style src="./layout.css" scoped />
 
+<script>
+import { clsx } from "clsx";
+
+export default {
+  // setup
+  setup() {
+    return { clsx };
+  },
+  // state
+  data() {
+    return {
+      menuOpen: true,
+    };
+  },
+  // actions
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+  },
+};
+</script>
+
 <template>
-  <div class="container">
+  <div class="header"></div>
+  <div class="main">
+    <div :class="clsx('sidebar', menuOpen && 'open', !menuOpen && 'closed')"></div>
     <div class="content">
       <slot />
     </div>

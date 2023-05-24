@@ -44,8 +44,9 @@
   --color-dark-pink: hsl(330, 85%, 50%);
 
   /* screen size */
+  --content-padding: 2rem;
   --min-screen-size: 576px;
-  --max-screen-size: 1200px;
+  --max-screen-size: calc(1200px + var(--content-padding));
 
   /*
     this is where you define global styles
@@ -54,4 +55,8 @@
     for button border you will add
     --button-border: 12px;
   */
+
+  /* header */
+  --header-height: 5rem;
+  --sidebar-width: 12rem;
 }

@@ -1,5 +1,5 @@
 .test {
-  background-color: var(--color-light-grey);
+  background-color: var(--color-purple);
   padding-inline: var(--size-md);
   padding-block: var(--size-3xl);
 }
