@@ -25,7 +25,7 @@ export default {
 
 <template>
   <div class="header"></div>
-  <div>
+  <div class="main">
     <div :class="clsx('sidebar', menuOpen && 'open', !menuOpen && 'closed')"></div>
     <div class="content">
       <slot />
