@@ -34,16 +34,24 @@ export default {
         sidebarClosed: !menuOpen,
       }"
     >
-      <div class="sidebarContent">
-        <button
-          @click="toggleMenu"
-          :class="{
-            menuButton: true,
-            menuOff: !menuOpen,
-          }"
-        >
-          <font-awesome-icon :icon="['fas', 'chevron-left']" />
-        </button>
+      <button
+        @click="toggleMenu"
+        :class="{
+          menuButton: true,
+          menuOff: !menuOpen,
+        }"
+      >
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </button>
+
+      <img class="logo" src="~/assets/Logo.png" />
+
+      <div class="menu">
+        <a href="/producten" class="menuItem" data_itemName="Producten overzicht">Producten overzicht</a>
+      </div>
+
+      <div class="bottomMenu">
+        <a href="#" class="login">Login</a>
       </div>
     </div>
     <div class="content">
