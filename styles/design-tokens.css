@@ -56,7 +56,6 @@
     --button-border: 12px;
   */
 
-  /* header */
-  --header-height: 5rem;
-  --sidebar-width: 12rem;
+  /* sidebar */
+  --sidebar-width: 14rem;
 }

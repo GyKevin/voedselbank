@@ -15,10 +15,15 @@
   transition: all 0.3s ease;
   background-color: var(--color-light-grey);
   box-shadow: 0px 0px 10px 0px var(--color-grey);
+  position: sticky;
+  top: 0;
 }
 
 .sidebarContent {
   padding: 1rem;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 200px 1fr auto;
 }
 
 .sidebarClosed {
@@ -26,11 +31,14 @@
 }
 
 .menuButton {
-  position: relative;
-  /* transform-style: preserve-3d; */
   all: unset;
-  width: 36px;
-  height: 36px;
+
+  position: absolute !important;
+  top: 1rem;
+  right: 0;
+
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,14 +47,27 @@
   color: white;
   font-size: large;
 
-  float: right;
-  transform: translateX(95%) rotateZ(0deg);
+  transform: translateX(50%) rotateZ(0deg);
   transition: all 0.3s ease;
 }
 
 .menuOff {
-  transform: translateX(100%) rotateZ(180deg);
+  transform: translateX(150%) rotateZ(180deg);
 }
+
+.logo {
+  width: 100%;
+}
+
+.containerOne {
+  /*  */
+}
+
+.bottomMenu {
+  justify-self: flex-start;
+}
+
+/* main content */
 
 .content {
   margin-inline: auto;
