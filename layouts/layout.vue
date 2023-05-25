@@ -1,51 +1,7 @@
 <style src="./layout.css" scoped />
-<script setup>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-</script>
-
-<script>
-/* import specific icons */
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faChevronLeft);
-
-export default {
-  // state
-  data() {
-    return {
-      menuOpen: true,
-    };
-  },
-  // actions
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
-  },
-};
-</script>
 
 <template>
-  <div class="main">
-    <div
-      :class="{
-        sidebar: true,
-        sidebarClosed: !menuOpen,
-      }"
-    >
-      <div class="sidebarContent">
-        <button
-          @click="toggleMenu"
-          :class="{
-            menuButton: true,
-            menuOff: !menuOpen,
-          }"
-        >
-          <font-awesome-icon :icon="['fas', 'chevron-left']" />
-        </button>
-      </div>
-    </div>
+  <div class="container">
     <div class="content">
       <slot />
     </div>
