@@ -1,13 +1,16 @@
 <style src="./layout.css" scoped />
+<script setup>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+</script>
 
 <script>
-import { clsx } from "clsx";
+/* import specific icons */
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faChevronLeft);
 
 export default {
-  // setup
-  setup() {
-    return { clsx };
-  },
   // state
   data() {
     return {
@@ -24,9 +27,25 @@ export default {
 </script>
 
 <template>
-  <!-- <div class="header"></div> -->
   <div class="main">
-    <div :class="clsx('sidebar', menuOpen && 'open', !menuOpen && 'closed')"></div>
+    <div
+      :class="{
+        sidebar: true,
+        sidebarClosed: !menuOpen,
+      }"
+    >
+      <div class="sidebarContent">
+        <button
+          @click="toggleMenu"
+          :class="{
+            menuButton: true,
+            menuOff: !menuOpen,
+          }"
+        >
+          <font-awesome-icon :icon="['fas', 'chevron-left']" />
+        </button>
+      </div>
+    </div>
     <div class="content">
       <slot />
     </div>
