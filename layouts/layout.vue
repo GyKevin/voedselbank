@@ -44,14 +44,16 @@ export default {
         <font-awesome-icon :icon="['fas', 'chevron-left']" />
       </button>
 
-      <img class="logo" src="~/assets/Logo.png" />
+      <div class="sidebarContent">
+        <img class="logo" src="~/assets/Logo.png" />
 
-      <div class="menu">
-        <a href="/producten" class="menuItem" data_itemName="Producten overzicht">Producten overzicht</a>
-      </div>
+        <div class="menu">
+          <a href="/producten" class="menuItem" data_itemName="Producten overzicht">Producten overzicht</a>
+        </div>
 
-      <div class="bottomMenu">
-        <a href="#" class="login">Login</a>
+        <div class="bottomMenu">
+          <a href="#" class="login">Login</a>
+        </div>
       </div>
     </div>
     <div class="content">
