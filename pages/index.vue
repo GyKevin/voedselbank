@@ -2,11 +2,17 @@
 
 <template>
   <div class="main">
-    <img src="~/assets/Logo.png" alt="">
-    <h2>{{ message }}</h2>
-    <span class="slogan">
-      Voor een gezonde toekomst: voeding, kansen en solidariteit
+    <div class="bannerBox">
+      <!-- <img class="banner" src="~/assets/HomepageBanner.jpg" alt=""> -->
+    </div>
+    <div class="welcomeMSG">
+      <img src="~/assets/Logo.png" alt="Logo" class="homepageLogo">
+    <h3>{{ message }}</h3>
+    <span class="slogan">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+       Dignissimos nisi sequi nulla delectus esse adipisci quidem modi tempore reprehenderit
+        sint itaque assumenda, atque aperiam laudantium quae ad eos repellendus natus.  
     </span>
+    </div>
   </div>
 </template>
 
