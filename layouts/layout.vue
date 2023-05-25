@@ -48,7 +48,7 @@ export default {
         <img class="logo" src="~/assets/Logo.png" />
 
         <div class="menu">
-          <a href="/producten" class="menuItem" data_itemName="Producten overzicht">Producten overzicht</a>
+          <a href="/producten" class="menuItem" data-content="Producten overzicht">Producten overzicht</a>
         </div>
 
         <div class="bottomMenu">
