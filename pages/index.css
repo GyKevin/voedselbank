@@ -1,5 +1,7 @@
-.test {
-  background-color: var(--color-purple);
+.main {
+  /* background-color: var(--color-purple); */
   padding-inline: var(--size-md);
   padding-block: var(--size-3xl);
+  border: 2px red solid;
+  height: 100%;
 }
