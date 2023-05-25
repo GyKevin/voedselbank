@@ -2,6 +2,7 @@
 
 <template>
   <div class="main">
+    <img src="~/assets/Logo.png" alt="">
     <h2>{{ message }}</h2>
     <span class="slogan">
       Voor een gezonde toekomst: voeding, kansen en solidariteit
