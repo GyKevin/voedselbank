@@ -17,11 +17,6 @@
   box-shadow: 0px 0px 10px 0px var(--color-grey);
   position: sticky;
   top: 0;
-}
-
-.sidebarContent {
-  padding: 1rem;
-  height: 100%;
   display: grid;
   grid-template-rows: 200px 1fr auto;
 }
@@ -59,8 +54,35 @@
   width: 100%;
 }
 
-.containerOne {
-  /*  */
+.menu {
+  width: 100%;
+}
+
+.menuItem {
+  all: unset;
+
+  display: block;
+  padding: 1rem;
+  width: auto;
+
+  position: relative;
+}
+.menuItem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-primary);
+  z-index: -1;
+
+  max-width: 0;
+  transition: max-width 0.5s;
+}
+.menuItem:hover::before {
+  max-width: 800px;
+  transition: max-width 1s;
 }
 
 .bottomMenu {
