@@ -10,6 +10,15 @@
   },
   "devDependencies": {
     "@types/node": "^18",
-    "nuxt": "^3.4.3"
+    "nuxt": "^3.4.3",
+    
+    "@nuxt/devtools": "^0.1.0"
+  },
+
+  
+  "pnpm": {
+    "overrides": {
+      "consola": "3.0.1"
+    }
   }
 }
