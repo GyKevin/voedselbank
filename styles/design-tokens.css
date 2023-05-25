@@ -27,8 +27,8 @@
 
   /* generic colors (these are optional use) */
   --color-light-grey: hsl(0, 0%, 96%);
-  --color-grey: hsl(0, 0%, 65%);
-  --color-dark-grey: hsl(0, 0%, 40%);
+  --color-grey: hsl(0, 0%, 80%);
+  --color-dark-grey: hsl(0, 0%, 60%);
   --color-red: hsl(0, 85%, 50%);
   --color-orange: hsl(30, 85%, 50%);
   --color-yellow: hsl(60, 85%, 50%);
@@ -44,8 +44,9 @@
   --color-dark-pink: hsl(330, 85%, 50%);
 
   /* screen size */
+  --content-padding: 2rem;
   --min-screen-size: 576px;
-  --max-screen-size: 1200px;
+  --max-screen-size: calc(1200px + var(--content-padding));
 
   /*
     this is where you define global styles
@@ -54,4 +55,8 @@
     for button border you will add
     --button-border: 12px;
   */
+
+  /* header */
+  --header-height: 5rem;
+  --sidebar-width: 12rem;
 }
