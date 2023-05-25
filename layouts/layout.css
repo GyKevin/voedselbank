@@ -15,10 +15,13 @@
   transition: all 0.3s ease;
   background-color: var(--color-light-grey);
   box-shadow: 0px 0px 10px 0px var(--color-grey);
+  position: sticky;
+  top: 0;
 }
 
 .sidebarContent {
   padding: 1rem;
+  height: 100%;
 }
 
 .sidebarClosed {
@@ -26,9 +29,12 @@
 }
 
 .menuButton {
-  position: relative;
-  /* transform-style: preserve-3d; */
   all: unset;
+
+  position: absolute !important;
+  top: 1rem;
+  right: 0;
+
   width: 36px;
   height: 36px;
   display: flex;
@@ -39,13 +45,13 @@
   color: white;
   font-size: large;
 
-  float: right;
-  transform: translateX(95%) rotateZ(0deg);
+  /* float: right; */
+  transform: translateX(50%) rotateZ(0deg);
   transition: all 0.3s ease;
 }
 
 .menuOff {
-  transform: translateX(100%) rotateZ(180deg);
+  transform: translateX(150%) rotateZ(180deg);
 }
 
 .content {
