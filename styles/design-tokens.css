@@ -45,7 +45,7 @@
 
   /* screen size */
   --content-padding: 2rem;
-  --min-screen-size: 576px;
+  --min-screen-size: 480px;
   --max-screen-size: calc(1200px + var(--content-padding));
 
   /*
@@ -56,7 +56,7 @@
     --button-border: 12px;
   */
 
-  /* header */
-  --header-height: 5rem;
-  --sidebar-width: 12rem;
+  /* sidebar */
+  --sidebar-width: 14rem;
+  --sidebar-logo-height: 12rem;
 }
