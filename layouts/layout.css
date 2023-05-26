@@ -66,7 +66,7 @@ the reason this is not on the main sidebar is because it would hide the menu but
 }
 
 .logoContainer {
-  height: 12rem;
+  height: var(--sidebar-logo-height);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +83,7 @@ the purpose of this class is to house all the buttons in the menu
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100% - 12rem); /* 12rem refers to .logoContainer height */
+  height: calc(100% - var(--sidebar-logo-height));
 }
 
 /* 
@@ -96,6 +96,7 @@ and provide hover animation
   display: block;
   padding: 1rem;
   width: auto;
+  cursor: pointer;
 
   position: relative;
 }
@@ -140,7 +141,6 @@ and provide hover animation
 
 @media only screen and (max-width: 768px) {
   .sidebar {
-    /* height: 100%; */
     position: absolute;
     z-index: 9999;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6), 0 0 0 1000px rgba(0, 0, 0, 0.4);
