@@ -2,6 +2,8 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+const { isDesktop } = useDevice();
 </script>
 
 <script>
@@ -15,7 +17,7 @@ export default {
   // state
   data() {
     return {
-      menuOpen: true,
+      menuOpen: this.$device.isDesktop,
     };
   },
   // actions
@@ -28,7 +30,7 @@ export default {
 </script>
 
 <template>
-  <div class="main">
+  <div class="container">
     <div
       :class="{
         sidebar: true,
@@ -45,20 +47,26 @@ export default {
         <font-awesome-icon :icon="['fas', 'chevron-left']" />
       </button>
 
-      <div class="sidebarContent">
-        <img class="logo" src="~/assets/Logo.png" />
-
-        <div class="menu">
-          <a href="/producten" class="menuItem" data-content="Producten overzicht">Producten overzicht</a>
-          <a href="/producten" class="menuItem" data-content="Producten overzicht">Item 2</a>
-          <a href="/producten" class="menuItem" data-content="Producten overzicht">Item 3</a>
+      <div class="sidebarContainer">
+        <div class="logoContainer">
+          <img class="logo" src="~/assets/Logo.png" />
         </div>
 
-        <div class="bottomMenu">
-          <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a>
+        <div class="sidebarMenu">
+          <div class="menu">
+            <a href="/" class="menuItem">Home</a>
+            <a href="/producten" class="menuItem">Producten overzicht</a>
+            <a href="/producten" class="menuItem">Item 3</a>
+            <a href="/producten" class="menuItem">Item 4</a>
+          </div>
+
+          <div class="bottomMenu">
+            <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="content">
       <slot />
     </div>

@@ -45,7 +45,7 @@
 
   /* screen size */
   --content-padding: 2rem;
-  --min-screen-size: 576px;
+  --min-screen-size: 480px;
   --max-screen-size: calc(1200px + var(--content-padding));
 
   /*
