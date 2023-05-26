@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 <script>
 /* import specific icons */
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faChevronLeft);
+library.add(faChevronLeft, faCircleUser);
 
 export default {
   // state
@@ -49,10 +50,12 @@ export default {
 
         <div class="menu">
           <a href="/producten" class="menuItem" data-content="Producten overzicht">Producten overzicht</a>
+          <a href="/producten" class="menuItem" data-content="Producten overzicht">Item 2</a>
+          <a href="/producten" class="menuItem" data-content="Producten overzicht">Item 3</a>
         </div>
 
         <div class="bottomMenu">
-          <a href="#" class="login">Login</a>
+          <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a>
         </div>
       </div>
     </div>
