@@ -18,11 +18,12 @@
   position: relative;
 }
 .homepageLogo {
-  height: 280px;
   filter: brightness(0) invert(1);
   position: absolute;
   top: 0;
   margin-top: 80px;
+  max-width: 100%;
+  max-height: 280px;
 }
 .welcomeMSG {
   display: flex;
