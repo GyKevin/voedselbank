@@ -2,19 +2,22 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+const { isDesktop } = useDevice();
 </script>
 
 <script>
 /* import specific icons */
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faChevronLeft);
+library.add(faChevronLeft, faCircleUser);
 
 export default {
   // state
   data() {
     return {
-      menuOpen: true,
+      menuOpen: this.$device.isDesktop,
     };
   },
   // actions
@@ -27,25 +30,43 @@ export default {
 </script>
 
 <template>
-  <div class="main">
+  <div class="container">
     <div
       :class="{
         sidebar: true,
         sidebarClosed: !menuOpen,
       }"
     >
-      <div class="sidebarContent">
-        <button
-          @click="toggleMenu"
-          :class="{
-            menuButton: true,
-            menuOff: !menuOpen,
-          }"
-        >
-          <font-awesome-icon :icon="['fas', 'chevron-left']" />
-        </button>
+      <button
+        @click="toggleMenu"
+        :class="{
+          menuButton: true,
+          menuOff: !menuOpen,
+        }"
+      >
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </button>
+
+      <div class="sidebarContainer">
+        <div class="logoContainer">
+          <img class="logo" src="~/assets/Logo.png" />
+        </div>
+
+        <div class="sidebarMenu">
+          <div class="menu">
+            <a href="/" class="menuItem">Home</a>
+            <a href="/producten" class="menuItem">Producten overzicht</a>
+            <a href="/producten" class="menuItem">Item 3</a>
+            <a href="/producten" class="menuItem">Item 4</a>
+          </div>
+
+          <div class="bottomMenu">
+            <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="content">
       <slot />
     </div>
