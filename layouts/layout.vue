@@ -61,7 +61,8 @@ export default {
           </div>
 
           <div class="bottomMenu">
-            <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a>
+            <!-- <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a> -->
+            <NuxtLink to="/login" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </NuxtLink>
           </div>
         </div>
       </div>
