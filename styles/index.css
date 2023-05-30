@@ -1,7 +1,12 @@
 @import url("design-tokens.css");
 
+:root {
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
 * {
   margin: 0;
+  box-sizing: border-box;
 }
 
 /* I encourage you to use article for article's */

@@ -1,9 +1,151 @@
 .container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  height: 100%;
 }
 
+/* 
+main sidebar
+the purpose of this class is to always stay on the screen and provide animation
+ */
+.sidebar {
+  height: 100vh;
+  width: var(--sidebar-width);
+  transition: width 0.3s ease;
+  background-color: var(--color-light-grey);
+  box-shadow: 0px 0px 10px 0px var(--color-grey);
+  position: sticky;
+  top: 0;
+}
+.sidebarClosed {
+  width: 0;
+}
+
+/* 
+menu button
+this button is the button that will toggle the sidebar
+ */
+.menuButton {
+  all: unset;
+
+  position: absolute !important;
+  top: 1rem;
+  right: 0;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  color: white;
+  font-size: large;
+  cursor: pointer;
+
+  transform: translateX(50%) rotateZ(0deg);
+  transition: all 0.3s ease;
+}
+
+.menuOff {
+  transform: translateX(150%) rotateZ(180deg);
+}
+
+/* 
+sidebar container
+the purpose of this class is to provide overflow hidden
+the reason this is not on the main sidebar is because it would hide the menu button
+ */
+.sidebarContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* to ensure a smooth opening and closing experience for the viewer */
+.sidebarContainer > * {
+  width: var(--sidebar-width);
+}
+
+.logoContainer {
+  height: var(--sidebar-logo-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  width: var(--sidebar-width);
+}
+
+/* 
+sidebar menu
+the purpose of this class is to house all the buttons in the menu
+ */
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - var(--sidebar-logo-height));
+}
+
+/* 
+the purpose of this class is to apply generic styles to all buttons
+and provide hover animation
+ */
+.sidebarMenu > * > a {
+  all: unset;
+
+  display: block;
+  padding: 1rem;
+  width: auto;
+  cursor: pointer;
+
+  position: relative;
+}
+.sidebarMenu > * > a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-primary);
+  z-index: -1;
+
+  max-width: 0;
+  transition: max-width 0.5s;
+}
+.sidebarMenu > * > a:hover::before {
+  max-width: 800px;
+  transition: max-width 1s;
+}
+
+.login {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--size-sm) !important;
+}
+.login > svg {
+  font-size: var(--font-size-2);
+}
+
+/* main content */
+
 .content {
+  margin-inline: auto;
+  padding-inline: var(--content-padding);
   width: clamp(var(--min-screen-size), 100%, var(--max-screen-size));
+  margin-block-start: var(--size-3xl);
+  overflow-y: auto;
+}
+
+/* mobile */
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    z-index: 9999;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6), 0 0 0 1000px rgba(0, 0, 0, 0.4);
+  }
+  .sidebarClosed {
+    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0);
+  }
 }
