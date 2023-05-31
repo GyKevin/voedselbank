@@ -1,0 +1,36 @@
+.product_table {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-light-grey);
+    border-radius: 12px;
+}
+table {
+    width: 80%;
+    text-align: center;
+    border-spacing: 0;
+    border-collapse: collapse;;
+    border: 2px solid var(--color-grey);
+    border-radius:6px;
+}
+
+th {
+    border: 2px solid var(--color-grey);
+    margin: 0;
+    padding: 0.5rem;
+    background-color: var(--color-primary);
+    color: whitesmoke;
+}
+
+td {
+    border: 2px solid var(--color-grey);
+    margin: 0;
+    padding: 0.5rem;
+    background-color: white;
+}
+
+
+
+
+
+
