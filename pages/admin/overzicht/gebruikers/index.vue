@@ -22,7 +22,7 @@ export default {
           id: 3,
           name: "Wiljan",
           email: "wiljanverhoeven@gmail.com",
-          functie: 3,
+          functie: 1,
         },
         {
           id: 4,
@@ -54,7 +54,7 @@ export default {
           <td class="min">{{ user.id }}</td>
           <td>{{ user.name ?? "-" }}</td>
           <td>{{ user.email ?? "-" }}</td>
-          <td>
+          <td class="min">
             <span v-if="user.functie === 0">Directie</span>
             <span v-else-if="user.functie === 1">Magazijnmedewerker</span>
             <span v-else-if="user.functie === 2">Vrijwilliger</span>
