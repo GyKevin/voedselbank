@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
         }
         console.log(result)
 
-        if (result === body.username && result === body.password) {
+        if (result.length > 0 && result[0].naam == body.username && result[0].password == body.password) {
             console.log("Login succesful")
         } else {
             console.log("Login failed")
