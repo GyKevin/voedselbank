@@ -15,13 +15,6 @@ connection.connect((err) => {
     }
 })
 
-// // publicly declare the interface for typing
-declare module "#app" {
-    interface NuxtApp {
-        $mysql: mysql.Connection
-    }
-}
-
 export function getMysqlConnection(): mysql.Connection {
     return connection;
 }
