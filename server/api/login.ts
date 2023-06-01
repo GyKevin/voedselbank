@@ -12,6 +12,12 @@ export default defineEventHandler(async (event) => {
             return
         }
         console.log(result)
+
+        if (result === body.username && result === body.password) {
+            console.log("Login succesful")
+        } else {
+            console.log("Login failed")
+        }
     })
 
     return body

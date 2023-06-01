@@ -20,6 +20,55 @@
 
 </template>
 
+
+
+<script>
+export default {
+  data() {
+    return {
+      isActive: true,
+      name: '',
+      email: '',
+      password: '',
+    }
+  },
+    methods: {
+    toggleRegister() {
+        if(this.isActive) {
+            this.$refs.register.classList.remove('display-none')
+            this.$refs.register.classList.toggle('display-block')
+            this.$refs.login.classList.remove('display-block')
+            this.$refs.login.classList.toggle('display-none')
+        }
+        this.isActive = !this.isActive
+    },
+    toggleLogin() {
+        if(!this.isActive) {
+            this.$refs.login.classList.remove('display-none')
+            this.$refs.login.classList.toggle('display-block')
+            this.$refs.register.classList.remove('display-block')
+            this.$refs.register.classList.toggle('display-none')
+        }
+        this.isActive = !this.isActive
+    },
+    login(e) {
+        e.preventDefault()
+        const { data, pending, error, refresh } = useFetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.name,
+                password: this.password
+            })
+        })
+        console.log(data, pending, error)
+    }
+}
+}
+</script>
+
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
@@ -119,50 +168,3 @@
   color: #EF3B3A;
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      isActive: true,
-      name: '',
-      email: '',
-      password: '',
-    }
-  },
-    methods: {
-    toggleRegister() {
-        if(this.isActive) {
-            this.$refs.register.classList.remove('display-none')
-            this.$refs.register.classList.toggle('display-block')
-            this.$refs.login.classList.remove('display-block')
-            this.$refs.login.classList.toggle('display-none')
-        }
-        this.isActive = !this.isActive
-    },
-    toggleLogin() {
-        if(!this.isActive) {
-            this.$refs.login.classList.remove('display-none')
-            this.$refs.login.classList.toggle('display-block')
-            this.$refs.register.classList.remove('display-block')
-            this.$refs.register.classList.toggle('display-none')
-        }
-        this.isActive = !this.isActive
-    },
-    login(e) {
-        e.preventDefault()
-        const { data, pending, error, refresh } = useFetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: this.name,
-                password: this.password
-            })
-        })
-        console.log(data, pending, error)
-    }
-}
-}
-</script>
