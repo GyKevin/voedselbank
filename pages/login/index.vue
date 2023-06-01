@@ -1,18 +1,19 @@
 <template>
     <div class="login-page">
   <div class="form">
-    <form class="register-form" ref="form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
+    <form class="display-none" ref="register">
+      <input type="text" placeholder="gebruikersnaam"/>
+      <input type="text" placeholder="email"/>
+      <input type="password" placeholder="wachtwoord"/>
+      <input type="password" placeholder="bevestig wachtwoord"/>
+      <button>aanmelden</button>
+      <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
-    <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
+    <form class="display-block" ref="login">
+      <input type="text" placeholder="gebruikersnaam"/>
+      <input type="password" placeholder="wachtwoord"/>
       <button>login</button>
-      <p class="message">Not registered? <a href="#" @click="toggleRegister">Create an account</a></p>
+      <p class="message">Niet geregistreerd? <a href="#" @click="toggleRegister">Meld aan</a></p>
     </form>
   </div>
 </div>
@@ -22,6 +23,13 @@
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+
+.display-none {
+    display: none;
+}
+.display-block {
+    display: block;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -52,18 +60,18 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background-color: var(--color-primary);
   width: 100%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
+  transition: 0.3s ease;
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: var(--color-button-hover);
 }
 .form .message {
   margin: 15px 0 0;
@@ -71,7 +79,7 @@
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: var(--color-primary);
   text-decoration: none;
 }
 .form .register-form {
@@ -114,15 +122,29 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isActive: true
+    }
+  },
     methods: {
-    // toggleForm() {
-    //   this.$refs.form.classList.toggle('message a');
-    // },
-    // showForm() {
-    //   this.$refs.form.classList.add('form');
-    // }
     toggleRegister() {
-        this.$refs.form.classList.toggle('message a')
+        if(this.isActive) {
+            this.$refs.register.classList.remove('display-none')
+            this.$refs.register.classList.toggle('display-block')
+            this.$refs.login.classList.remove('display-block')
+            this.$refs.login.classList.toggle('display-none')
+        }
+        this.isActive = !this.isActive
+    },
+    toggleLogin() {
+        if(!this.isActive) {
+            this.$refs.login.classList.remove('display-none')
+            this.$refs.login.classList.toggle('display-block')
+            this.$refs.register.classList.remove('display-block')
+            this.$refs.register.classList.toggle('display-none')
+        }
+        this.isActive = !this.isActive
     }
 }
 }
