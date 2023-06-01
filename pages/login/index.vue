@@ -10,9 +10,9 @@
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
     <form class="display-block" ref="login">
-      <input type="text" placeholder="gebruikersnaam"/>
-      <input type="password" placeholder="wachtwoord"/>
-      <button>login</button>
+      <input type="text" placeholder="gebruikersnaam" v-model="name" />
+      <input type="password" placeholder="wachtwoord" v-model="password" />
+      <button @click="login">login</button>
       <p class="message">Niet geregistreerd? <a href="#" @click="toggleRegister">Meld aan</a></p>
     </form>
   </div>
@@ -124,7 +124,10 @@
 export default {
   data() {
     return {
-      isActive: true
+      isActive: true,
+      name: '',
+      email: '',
+      password: '',
     }
   },
     methods: {
@@ -145,6 +148,20 @@ export default {
             this.$refs.register.classList.toggle('display-none')
         }
         this.isActive = !this.isActive
+    },
+    login(e) {
+        e.preventDefault()
+        const { data, pending, error, refresh } = useFetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.name,
+                password: this.password
+            })
+        })
+        console.log(data, pending, error)
     }
 }
 }
