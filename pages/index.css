@@ -5,3 +5,30 @@
   border: 2px red solid;
   height: 100%;
 }
+.bannerBox {
+  /* border: solid red 3px; */
+  width: 100%;
+  height: 300px;
+  background-image: url("~/assets/HomepageBanner.jpg");
+  background-size: cover;
+  position: relative;
+}
+.homepageLogo {
+  filter: brightness(0) invert(1);
+  position: absolute;
+  top: 0;
+  margin-top: 80px;
+  max-width: 100%;
+  max-height: 280px;
+}
+.welcomeMSG {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+.test {
+  width: 100%;
+  height: 200px;
+  background-attachment: fixed;
+}
