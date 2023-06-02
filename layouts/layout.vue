@@ -2,8 +2,6 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-const { isDesktop } = useDevice();
 </script>
 
 <script>
@@ -54,10 +52,10 @@ export default {
 
         <div class="sidebarMenu">
           <div class="menu">
-            <a href="/" class="menuItem">Home</a>
-            <a href="/producten" class="menuItem">Producten overzicht</a>
-            <a href="/producten" class="menuItem">Item 3</a>
-            <a href="/producten" class="menuItem">Item 4</a>
+            <a href="/">Home</a>
+            <a href="/producten">Producten overzicht</a>
+            <a href="/admin/overzicht/gebruikers">Gebruikers overzicht</a>
+            <a href="/producten">Item 4</a>
           </div>
 
           <div class="bottomMenu">
