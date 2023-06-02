@@ -44,6 +44,9 @@ export default {};
             <span v-else>-</span>
           </td>
         </tr>
+        <tr v-if="!users[0]">
+          <td class="min">Geen gebruikers zichtbaar.</td>
+        </tr>
       </tbody>
     </table>
   </div>
