@@ -1,45 +1,29 @@
 <style src="./index.css" scoped />
 
-<script>
-export default {
-  // state
-  data() {
-    return {
-      users: [
-        {
-          id: 1,
-          name: "Harold",
-          email: "HaroldW@gmail.com",
-          functie: 0,
-        },
-        {
-          id: 2,
-          name: "Frank",
-          email: "fortKnox@outlook.com",
-          functie: 2,
-        },
-        {
-          id: 3,
-          name: "Wiljan",
-          email: "wiljanverhoeven@gmail.com",
-          functie: 1,
-        },
-        {
-          id: 4,
-          name: "Kevin",
-          email: "hiiiren@gmail.com",
-          functie: 2,
-        },
-      ],
-    };
+<script setup>
+const {
+  data: users,
+  pending,
+  error,
+  refresh,
+} = useFetch("/api/overzicht/gebruikers", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
   },
-};
+});
+</script>
+
+<script>
+export default {};
 </script>
 
 <template>
   <h4>Gebruikers overzicht</h4>
 
-  <div class="tableWrapper">
+  <p v-if="error">{{ error }}</p>
+  <p v-if="pending">Loading...</p>
+  <div v-if="!!users" class="tableWrapper">
     <table>
       <thead>
         <tr>
@@ -52,7 +36,7 @@ export default {
       <tbody>
         <tr v-for="user in users">
           <td class="min">{{ user.id }}</td>
-          <td>{{ user.name ?? "-" }}</td>
+          <td>{{ user.naam ?? "-" }}</td>
           <td>{{ user.email ?? "-" }}</td>
           <td class="min">
             <span v-if="user.functie === 0">Directie</span>
