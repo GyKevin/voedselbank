@@ -5,7 +5,6 @@ const {
   data: users,
   pending,
   error,
-  refresh,
 } = useFetch("/api/overzicht/gebruikers", {
   method: "GET",
   headers: {
