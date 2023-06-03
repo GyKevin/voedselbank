@@ -44,3 +44,7 @@ td.min {
   width: 1%;
   white-space: nowrap;
 }
+
+table .click {
+  cursor: pointer;
+}
