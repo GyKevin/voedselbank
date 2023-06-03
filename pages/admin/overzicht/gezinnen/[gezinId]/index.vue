@@ -22,7 +22,7 @@ import * as yup from "yup";
 const naamRules = yup.string().required();
 const telefoonRules = yup.string().required();
 const adresRules = yup.string().required();
-const postcodeRules = yup.string().required().max(7);
+const postcodeRules = yup.string().required().min(6).max(7);
 const emailRules = yup.string().email().required();
 const volwassenenRules = yup.number().required().integer();
 const jongerenRules = yup.number().required().integer();
@@ -48,53 +48,53 @@ export default {
 
     <Form @submit="onSubmit">
       <div class="formContent">
-        <label>
-          Naam
+        <div>
+          <label for="naam">Naam</label>
           <Field type="text" name="naam" :rules="naamRules" />
           <ErrorMessage name="naam" />
-        </label>
+        </div>
 
-        <label>
-          Telefoon
-          <Field type="text" name="telefoon" :rules="telefoonRules" />
+        <div>
+          <label for="telefoon">Telefoon</label>
+          <Field type="tel" name="telefoon" :rules="telefoonRules" />
           <ErrorMessage name="telefoon" />
-        </label>
+        </div>
 
-        <label>
-          Adres
+        <div>
+          <label for="adres">Adres</label>
           <Field type="text" name="adres" :rules="adresRules" />
           <ErrorMessage name="adres" />
-        </label>
+        </div>
 
-        <label>
-          Postcode
+        <div>
+          <label for="postcode">Postcode</label>
           <Field type="text" name="postcode" :rules="postcodeRules" />
           <ErrorMessage name="postcode" />
-        </label>
+        </div>
 
-        <label>
-          Email
+        <div>
+          <label for="email">Email</label>
           <Field type="email" name="email" :rules="emailRules" />
           <ErrorMessage name="email" />
-        </label>
+        </div>
 
-        <label>
-          Volwassenen
+        <div>
+          <label for="volwassenen">Volwassenen</label>
           <Field type="number" name="volwassenen" :rules="volwassenenRules" />
           <ErrorMessage name="volwassenen" />
-        </label>
+        </div>
 
-        <label>
-          Jongeren
+        <div>
+          <label for="jongeren">Jongeren</label>
           <Field type="number" name="jongeren" :rules="jongerenRules" />
           <ErrorMessage name="jongeren" />
-        </label>
+        </div>
 
-        <label>
-          Babies
+        <div>
+          <label for="babies">Babies</label>
           <Field type="number" name="babies" :rules="babiesRules" />
           <ErrorMessage name="babies" />
-        </label>
+        </div>
       </div>
 
       <button>Accept</button>
