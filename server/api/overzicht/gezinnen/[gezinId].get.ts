@@ -15,7 +15,10 @@ export default defineEventHandler(async (event) => {
       .promise()
       .execute("SELECT * FROM klanten where id = ?", [event.context.params.gezinId]);
 
-    return results;
+    // @ts-ignore
+    const _result = results[0];
+
+    return _result;
   } catch (error) {
     return error;
   }

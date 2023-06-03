@@ -4,7 +4,7 @@
 const route = useRoute();
 
 const {
-  data: users,
+  data: gezin,
   pending,
   error,
 } = useFetch(`/api/overzicht/gezinnen/${route.params.gezinId}`, {
@@ -43,56 +43,56 @@ export default {
 </script>
 
 <template>
-  <div v-if="!!users">
+  <div v-if="!!gezin">
     <h4>Edit gezin</h4>
 
     <Form @submit="onSubmit">
       <div class="formContent">
         <div>
           <label for="naam">Naam</label>
-          <Field type="text" name="naam" :rules="naamRules" />
+          <Field type="text" name="naam" :value="gezin.naam" :rules="naamRules" />
           <ErrorMessage name="naam" />
         </div>
 
         <div>
           <label for="telefoon">Telefoon</label>
-          <Field type="tel" name="telefoon" :rules="telefoonRules" />
+          <Field type="tel" name="telefoon" :value="gezin.telefoon" :rules="telefoonRules" />
           <ErrorMessage name="telefoon" />
         </div>
 
         <div>
           <label for="adres">Adres</label>
-          <Field type="text" name="adres" :rules="adresRules" />
+          <Field type="text" name="adres" :value="gezin.adres" :rules="adresRules" />
           <ErrorMessage name="adres" />
         </div>
 
         <div>
           <label for="postcode">Postcode</label>
-          <Field type="text" name="postcode" :rules="postcodeRules" />
+          <Field type="text" name="postcode" :value="gezin.postcode" :rules="postcodeRules" />
           <ErrorMessage name="postcode" />
         </div>
 
         <div>
           <label for="email">Email</label>
-          <Field type="email" name="email" :rules="emailRules" />
+          <Field type="email" name="email" :value="gezin.email" :rules="emailRules" />
           <ErrorMessage name="email" />
         </div>
 
         <div>
           <label for="volwassenen">Volwassenen</label>
-          <Field type="number" name="volwassenen" :rules="volwassenenRules" />
+          <Field type="number" name="volwassenen" :value="gezin.volwassenen" :rules="volwassenenRules" />
           <ErrorMessage name="volwassenen" />
         </div>
 
         <div>
           <label for="jongeren">Jongeren</label>
-          <Field type="number" name="jongeren" :rules="jongerenRules" />
+          <Field type="number" name="jongeren" :value="gezin.jongeren" :rules="jongerenRules" />
           <ErrorMessage name="jongeren" />
         </div>
 
         <div>
           <label for="babies">Babies</label>
-          <Field type="number" name="babies" :rules="babiesRules" />
+          <Field type="number" name="babies" :value="gezin.baby" :rules="babiesRules" />
           <ErrorMessage name="babies" />
         </div>
       </div>
