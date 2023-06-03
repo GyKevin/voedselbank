@@ -1,0 +1,14 @@
+h4 {
+  margin-block-end: var(--size-xl);
+}
+
+form .formContent {
+  display: grid;
+  gap: var(--size-lg);
+  grid-template-columns: 1fr 1fr;
+}
+
+form .formContent > * {
+  display: flex;
+  flex-direction: column;
+}

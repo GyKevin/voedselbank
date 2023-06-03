@@ -18,7 +18,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
-    "mysql2": "^3.3.3"
+    "mysql2": "^3.3.3",
+    "vee-validate": "^4.9.6",
+    "yup": "^1.2.0"
   },
   "pnpm": {
     "overrides": {
