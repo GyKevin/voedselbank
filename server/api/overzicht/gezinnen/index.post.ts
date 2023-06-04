@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   let userSchema = yup.object({
+    id: yup.number(),
     naam: yup.string().required(),
     telefoon: yup.string().required(),
     adres: yup.string().required(),
