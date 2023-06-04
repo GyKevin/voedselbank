@@ -1,5 +1,7 @@
-h4 {
+.header {
   margin-block-end: var(--size-xl);
+  display: flex;
+  justify-content: space-between;
 }
 
 .tableWrapper {
@@ -43,4 +45,8 @@ th {
 td.min {
   width: 1%;
   white-space: nowrap;
+}
+
+table .click {
+  cursor: pointer;
 }

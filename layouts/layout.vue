@@ -46,7 +46,7 @@ export default {
       </button>
 
       <div class="sidebarContainer">
-        <div class="logoContainer">
+        <div class="logoContainer" @click="() => navigateTo('/', { replace: true })">
           <img class="logo" src="~/assets/Logo.png" />
         </div>
 
@@ -55,7 +55,7 @@ export default {
             <a href="/">Home</a>
             <a href="/producten">Producten overzicht</a>
             <a href="/admin/overzicht/gebruikers">Gebruikers overzicht</a>
-            <a href="/producten">Item 4</a>
+            <a href="/admin/overzicht/gezinnen">Gezinnen overzicht</a>
           </div>
 
           <div class="bottomMenu">
