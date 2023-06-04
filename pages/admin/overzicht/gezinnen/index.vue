@@ -4,9 +4,9 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faArrowRight);
+library.add(faArrowRight, faSquarePlus);
 
 const {
   data: users,
@@ -25,7 +25,15 @@ export default {};
 </script>
 
 <template>
-  <h4>Gezinnen overzicht</h4>
+  <div class="header">
+    <h4>Gezinnen overzicht</h4>
+    <Button
+      @click="() => navigateTo('/admin/overzicht/gezinnen/new', { replace: true })"
+      :icon="['fas', 'square-plus']"
+    >
+      Toevoegen
+    </Button>
+  </div>
 
   <p v-if="error">{{ error }}</p>
   <p v-if="pending">Loading...</p>

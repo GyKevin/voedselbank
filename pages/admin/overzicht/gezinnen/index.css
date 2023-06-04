@@ -1,5 +1,7 @@
-h4 {
+.header {
   margin-block-end: var(--size-xl);
+  display: flex;
+  justify-content: space-between;
 }
 
 .tableWrapper {

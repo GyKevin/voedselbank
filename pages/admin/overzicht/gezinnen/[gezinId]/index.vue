@@ -1,34 +1,39 @@
 <style src="./index.css" scoped />
 
-<script setup>
-const route = useRoute();
-
-const {
-  data: gezin,
-  pending,
-  error,
-} = useFetch(`/api/overzicht/gezinnen/${route.params.gezinId}`, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-</script>
-
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
-const naamRules = yup.string().required();
-const telefoonRules = yup.string().required();
-const adresRules = yup.string().required();
-const postcodeRules = yup.string().required().min(6).max(7);
-const emailRules = yup.string().email().required();
-const volwassenenRules = yup.number().required().integer();
-const jongerenRules = yup.number().required().integer();
-const babiesRules = yup.number().required().integer();
-
 export default {
+  data() {
+    return {
+      naamRules: yup.string().required(),
+      telefoonRules: yup.number().required(),
+      adresRules: yup.string().required(),
+      postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
+      emailRules: yup.string().email().required(),
+      volwassenenRules: yup.number().required().integer(),
+      jongerenRules: yup.number().required().integer(),
+      babiesRules: yup.number().required().integer(),
+    };
+  },
+  setup() {
+    const route = useRoute();
+
+    const {
+      data: gezin,
+      pending,
+      error,
+      refresh,
+    } = useFetch(`/api/overzicht/gezinnen/${route.params.gezinId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { gezin, pending, error, refresh };
+  },
   components: {
     Form,
     Field,
@@ -36,7 +41,18 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      console.log(values);
+      const _values = { ...values, id: this.gezin.id, postcode: values.postcode.replace(/\s/g, "") };
+
+      useFetch(`/api/overzicht/gezinnen/${this.gezin.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(_values),
+      }).then((data) => {
+        this.refresh();
+        navigateTo("/admin/overzicht/gezinnen", { replace: true });
+      });
     },
   },
 };
@@ -44,7 +60,7 @@ export default {
 
 <template>
   <div v-if="!!gezin">
-    <h4>Edit gezin</h4>
+    <h4>{{ gezin.naam }}'s gezin</h4>
 
     <Form @submit="onSubmit">
       <div class="formContent">
@@ -97,7 +113,7 @@ export default {
         </div>
       </div>
 
-      <button>Accept</button>
+      <Button>Accept</Button>
     </Form>
   </div>
 

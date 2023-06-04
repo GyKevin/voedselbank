@@ -70,6 +70,7 @@ the reason this is not on the main sidebar is because it would hide the menu but
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .logo {
   width: var(--sidebar-width);

@@ -46,7 +46,7 @@ export default {
       </button>
 
       <div class="sidebarContainer">
-        <div class="logoContainer">
+        <div class="logoContainer" @click="() => navigateTo('/', { replace: true })">
           <img class="logo" src="~/assets/Logo.png" />
         </div>
 
