@@ -4,8 +4,6 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
-import Button from "~/components/Button/Button.vue";
-
 export default {
   data() {
     return {
@@ -23,7 +21,6 @@ export default {
     Form,
     Field,
     ErrorMessage,
-    Button,
   },
   methods: {
     onSubmit(values) {
