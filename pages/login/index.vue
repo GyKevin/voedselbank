@@ -2,11 +2,11 @@
     <div class="login-page">
   <div class="form">
     <form class="display-none" ref="register">
-      <input type="text" placeholder="gebruikersnaam"/>
-      <input type="text" placeholder="email"/>
-      <input type="password" placeholder="wachtwoord"/>
-      <input type="password" placeholder="bevestig wachtwoord"/>
-      <button>aanmelden</button>
+      <input type="text" placeholder="gebruikersnaam" v-model="username"/>
+      <input type="text" placeholder="email" v-model="regemail"/>
+      <input type="password" placeholder="wachtwoord" v-model="pass"/>
+      <!-- <input type="password" placeholder="bevestig wachtwoord" v-model="confpass"/> -->
+      <button @click="register">aanmelden</button>
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
     <form class="display-block" ref="login">
@@ -30,6 +30,9 @@ export default {
       name: '',
       email: '',
       password: '',
+      username: '',
+      regemail: '',
+      pass: '',
     }
   },
     methods: {
@@ -61,6 +64,22 @@ export default {
             body: JSON.stringify({
                 username: this.name,
                 password: this.password
+            })
+        })
+        console.log(data, pending, error)
+    },
+    register(e) {
+      e.preventDefault()
+        const { data, pending, error, refresh } = useFetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.username,
+                email: this.email,
+                password: this.pass,
+                // confirmpassword: this.confpass
             })
         })
         console.log(data, pending, error)
