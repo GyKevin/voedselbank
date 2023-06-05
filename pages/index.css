@@ -2,8 +2,12 @@
   /* background-color: var(--color-purple); */
   padding-inline: var(--size-md);
   padding-block: var(--size-3xl);
-  border: 2px red solid;
+  /* border: 2px red solid; */
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
 }
 .bannerBox {
   /* border: solid red 3px; */
