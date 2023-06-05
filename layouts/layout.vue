@@ -52,10 +52,10 @@ export default {
 
         <div class="sidebarMenu">
           <div class="menu">
-            <a href="/">Home</a>
-            <a href="/producten">Producten overzicht</a>
-            <a href="/admin/overzicht/gebruikers">Gebruikers overzicht</a>
-            <a href="/admin/overzicht/gezinnen">Gezinnen overzicht</a>
+            <NuxtLink to="/">Home</NuxtLink>
+            <NuxtLink to="/producten">Producten overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">
