@@ -3,9 +3,9 @@
   <div class="form">
     <form class="display-none" ref="register">
       <input type="text" placeholder="gebruikersnaam" v-model="username"/>
-      <input type="text" placeholder="email" v-model="regemail"/>
+      <input type="email" placeholder="email" v-model="regemail"/>
       <input type="password" placeholder="wachtwoord" v-model="pass"/>
-      <!-- <input type="password" placeholder="bevestig wachtwoord" v-model="confpass"/> -->
+      <input type="password" placeholder="bevestig wachtwoord" v-model="confpass"/>
       <button @click="register">aanmelden</button>
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
@@ -33,6 +33,7 @@ export default {
       username: '',
       regemail: '',
       pass: '',
+      confpass: '',
     }
   },
     methods: {
@@ -77,9 +78,9 @@ export default {
             },
             body: JSON.stringify({
                 username: this.username,
-                email: this.email,
+                email: this.regemail,
                 password: this.pass,
-                // confirmpassword: this.confpass
+                confirmpassword: this.confpass
             })
         })
         console.log(data, pending, error)

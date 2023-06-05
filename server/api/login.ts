@@ -13,10 +13,16 @@ export default defineEventHandler(async (event) => {
         }
         console.log(result)
 
-        if (result.length > 0 && result[0].naam == body.username && result[0].password == body.password) {
-            console.log("Login succesful")
+        if (
+            result.length > 0 &&
+            result[0].naam === body.username &&
+            result[0].password === body.password
+        ) {
+            console.log("Login successful");
+            // Set a cookie to remember the successful login
+            setCookie("loggedIn", "true", { maxAge: 86400 }); // Example: cookie expires in 1 day (86400 seconds)
         } else {
-            console.log("Login failed")
+            console.log("Login failed");
         }
     })
 
