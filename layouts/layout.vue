@@ -2,8 +2,6 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-const { isDesktop } = useDevice();
 </script>
 
 <script>
@@ -48,16 +46,16 @@ export default {
       </button>
 
       <div class="sidebarContainer">
-        <div class="logoContainer">
+        <div class="logoContainer" @click="() => navigateTo('/', { replace: true })">
           <img class="logo" src="~/assets/Logo.png" />
         </div>
 
         <div class="sidebarMenu">
           <div class="menu">
-            <a href="/" class="menuItem">Home</a>
-            <a href="/producten" class="menuItem">Producten overzicht</a>
-            <a href="/producten" class="menuItem">Item 3</a>
-            <a href="/producten" class="menuItem">Item 4</a>
+            <NuxtLink to="/">Home</NuxtLink>
+            <NuxtLink to="/producten">Producten overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">

@@ -27,7 +27,7 @@
   --color-button-hover: hsl(146, 55%, 22%);
 
   /* generic colors (these are optional use) */
-  --color-light-grey: hsl(0, 0%, 96%);
+  --color-light-grey: hsl(0, 0%, 94%);
   --color-grey: hsl(0, 0%, 80%);
   --color-dark-grey: hsl(0, 0%, 60%);
   --color-red: hsl(0, 85%, 50%);
@@ -56,6 +56,8 @@
     for button border you will add
     --button-border: 12px;
   */
+
+  --border-radius: 4px;
 
   /* sidebar */
   --sidebar-width: 14rem;
