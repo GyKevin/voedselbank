@@ -56,7 +56,7 @@ export default {
           <div class="menu">
             <a href="/" class="menuItem">Home</a>
             <a href="/producten" class="menuItem">Producten overzicht</a>
-            <a href="/producten" class="menuItem">Item 3</a>
+            <a href="/admin/leveranciers" class="menuItem">admin</a>
             <a href="/producten" class="menuItem">Item 4</a>
           </div>
 
