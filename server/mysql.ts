@@ -1,19 +1,19 @@
-import mysql from 'mysql2';
+import mysql from "mysql2";
 
 const connection = mysql.createConnection({
-    host: '34.90.109.250',
-    user: 'root',
-    password: '',
-    database: 'voedselbank'
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "voedselbank",
 });
 
 connection.connect((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('Connected to the MySQL server');
-    }
-})
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Connected to the MySQL server");
+  }
+});
 
 // // publicly declare the interface for typing
 declare module "#app" {
@@ -23,5 +23,5 @@ declare module "#app" {
 }
 
 export function getMysqlConnection(): mysql.Connection {
-    return connection;
+  return connection;
 }

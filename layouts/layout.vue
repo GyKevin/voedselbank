@@ -2,30 +2,30 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-const { isDesktop } = useDevice();
 </script>
 
 <script>
 /* import specific icons */
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { NuxtLink } from "~/.nuxt/components";
 
 library.add(faChevronLeft, faCircleUser);
 
 export default {
-  // state
-  data() {
-    return {
-      menuOpen: this.$device.isDesktop,
-    };
-  },
-  // actions
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
+    // state
+    data() {
+        return {
+            menuOpen: this.$device.isDesktop,
+        };
     },
-  },
+    // actions
+    methods: {
+        toggleMenu() {
+            this.menuOpen = !this.menuOpen;
+        },
+    },
+    components: { NuxtLink }
 };
 </script>
 
@@ -48,16 +48,17 @@ export default {
       </button>
 
       <div class="sidebarContainer">
-        <div class="logoContainer">
+        <div class="logoContainer" @click="() => navigateTo('/', { replace: true })">
           <img class="logo" src="~/assets/Logo.png" />
         </div>
 
         <div class="sidebarMenu">
           <div class="menu">
-            <a href="/" class="menuItem">Home</a>
-            <a href="/producten" class="menuItem">Producten overzicht</a>
-            <a href="/admin/leveranciers" class="menuItem">admin</a>
-            <a href="/producten" class="menuItem">Item 4</a>
+            <NuxtLink to="/">Home</NuxtLink>
+            <NuxtLink to="/producten">Producten overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/leveranciers">Leverancieren overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">
