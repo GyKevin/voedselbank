@@ -6,25 +6,20 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     console.log(body)
 
-    con.execute("SELECT * FROM gebruikers WHERE naam = ? AND password = ?", [body.username, body.password], (err, result) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-        console.log(result)
 
-        if (
-            result.length > 0 &&
-            result[0].naam === body.username &&
-            result[0].password === body.password
-        ) {
-            console.log("Login successful");
-            // Set a cookie to remember the successful login
-            setCookie("loggedIn", "true", { maxAge: 86400 }); // Example: cookie expires in 1 day (86400 seconds)
-        } else {
-            console.log("Login failed");
-        }
-    })
+    const [result, fields] = await con.promise().execute("SELECT * FROM gebruikers WHERE naam = ? AND password = ?", [body.username, body.password])
+    if (result.length > 0 && result[0].naam === body.username && result[0].password === body.password) {
 
-    return body
+        setCookie(event, "user_id", result[0].id, { maxAge: 60 * 60 * 24 * 7, path: "/" });
+        return {
+            status: 200,
+            message: "Logged in"
+        };
+    }
+    else {
+        return {
+            status: 401,
+            message: "Unauthorized"
+        }
+    }
 });
