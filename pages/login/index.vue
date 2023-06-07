@@ -10,7 +10,7 @@
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
     <form class="display-block" ref="login">
-      <input type="text" placeholder="gebruikersnaam" v-model="name" />
+      <input type="email" placeholder="email" v-model="email" />
       <input type="password" placeholder="wachtwoord" v-model="password" />
       <button @click="login">login</button>
       <p class="message">Niet geregistreerd? <a href="#" @click="toggleRegister">Meld aan</a></p>
@@ -35,6 +35,11 @@ export default {
       pass: '',
       confpass: '',
     }
+  },
+  mounted() {
+    //import the cookies set in login.ts file
+    // const cookies = this.$cookies.get('loggedIn')
+    // console.log(cookies)
   },
     methods: {
     toggleRegister() {
@@ -63,11 +68,14 @@ export default {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: this.name,
+                email: this.email,
                 password: this.password
             })
         })
-        console.log(data, pending, error)
+        const cookieStatus = document.cookie.includes('user_id');
+        if (cookieStatus) {
+          this.$router.push('/')
+        }
     },
     register(e) {
       e.preventDefault()

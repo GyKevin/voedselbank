@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  
   // state
   data() {
     return {
@@ -28,6 +29,8 @@ export default {
   mounted() {
     const  randomIndex = Math.floor(Math.random() * this.name.length);
     this.message = `Welkom, ${this.name[randomIndex]}!`;
+    const username = useCookie("user_name");
+    console.log(username);
   },
   // actions
   methods: {
