@@ -16,13 +16,25 @@ export default {
   data() {
     return {
       menuOpen: this.$device.isDesktop,
+      loggedIn: false,
     };
+  },
+  mounted() {
+    const cookieStatus = document.cookie.includes('user_id');
+      if(cookieStatus) {
+        this.loggedIn = true;
+      }
   },
   // actions
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
     },
+    logout() {
+      document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      this.loggedIn = false;
+    }
   },
 };
 </script>
@@ -60,7 +72,8 @@ export default {
 
           <div class="bottomMenu">
             <!-- <a href="#" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </a> -->
-            <NuxtLink to="/login" class="login"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </NuxtLink>
+            <NuxtLink to="/login" class="login" v-if="loggedIn === false"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </NuxtLink>
+            <NuxtLink to="/login" class="login" v-if="loggedIn === true" @click="logout"> <font-awesome-icon :icon="['fas', 'right-from-bracket']" /> Logout </NuxtLink>
           </div>
         </div>
       </div>

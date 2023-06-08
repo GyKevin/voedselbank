@@ -115,7 +115,7 @@ export default {
                   confirmpassword: this.confpass
               })
           })
-          console.log(data, pending, error)
+          // console.log(data, pending, error)
           window.location.reload()
         }
     }
