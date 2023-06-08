@@ -7,12 +7,16 @@
       <input type="password" placeholder="wachtwoord" v-model="pass"/>
       <input type="password" placeholder="bevestig wachtwoord" v-model="confpass"/>
       <button @click="register">aanmelden</button>
+      <p class="error_message" v-if="register_email_error === true">invalid email</p>
+      <p class="error_message" v-if="register_username_error === true">invalid username</p>
+      <p class="error_message" v-if="register_password_error === true">invalid password or passwords don't match</p>
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
     <form class="display-block" ref="login">
       <input type="email" placeholder="email" v-model="email" />
       <input type="password" placeholder="wachtwoord" v-model="password" />
       <button @click="login">login</button>
+      <p class="error_message" v-if="login_error === true">wachtwoord of email is niet correct.</p>
       <p class="message">Niet geregistreerd? <a href="#" @click="toggleRegister">Meld aan</a></p>
     </form>
   </div>
@@ -34,6 +38,10 @@ export default {
       regemail: '',
       pass: '',
       confpass: '',
+      login_error: false,
+      register_username_error: false,
+      register_email_error: false,
+      register_password_error: false,
     }
   },
   mounted() {
@@ -75,23 +83,41 @@ export default {
         const cookieStatus = document.cookie.includes('user_id');
         if (cookieStatus) {
           this.$router.push('/')
+        } else {
+          this.login_error = true
         }
     },
     register(e) {
-      e.preventDefault()
-        const { data, pending, error, refresh } = useFetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: this.username,
-                email: this.regemail,
-                password: this.pass,
-                confirmpassword: this.confpass
-            })
-        })
-        console.log(data, pending, error)
+        // check for errors
+        if(!this.regemail.includes('@', '.')) {
+          this.register_email_error = true
+        }
+        if(!this.username.includes('')) {
+          this.register_username_error = true
+        }
+        if(!this.pass.includes('') || this.pass != this.confpass) {
+          this.register_password_error = true
+        }
+        // if no errors, register
+        if(this.register_email_error === false && 
+          this.register_username_error === false && 
+          this.register_password_error === false) {
+          e.preventDefault()
+          const { data, pending, error, refresh } = useFetch('/api/register', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  username: this.username,
+                  email: this.regemail,
+                  password: this.pass,
+                  confirmpassword: this.confpass
+              })
+          })
+          console.log(data, pending, error)
+          window.location.reload()
+        }
     }
 }
 }
@@ -100,6 +126,9 @@ export default {
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.error_message {
+    color: red;
+}
 
 .display-none {
     display: none;

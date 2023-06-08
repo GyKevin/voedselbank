@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
                 return;
             }
             
-            if (result.length > 0) {
-                console.log("Email already exists in the database.");
+            if (result.length > 0 || body.email === '') {
+                console.log("Invalid email address");
             } else {
                 con.execute("INSERT INTO gebruikers (naam, email, password) VALUES (?, ?, ?)",
                 [body.username, body.email, body.password], (err, result) => {
