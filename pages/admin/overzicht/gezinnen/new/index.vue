@@ -12,9 +12,9 @@ export default {
       adresRules: yup.string().required(),
       postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
       emailRules: yup.string().email().required(),
-      volwassenenRules: yup.number().required().integer(),
-      jongerenRules: yup.number().required().integer(),
-      babiesRules: yup.number().required().integer(),
+      volwassenenRules: yup.number().required().integer().min(0),
+      jongerenRules: yup.number().required().integer().min(0),
+      babiesRules: yup.number().required().integer().min(0),
     };
   },
   components: {
