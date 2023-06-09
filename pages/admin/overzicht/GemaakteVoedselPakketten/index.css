@@ -1,0 +1,75 @@
+.header {
+  margin-block-end: var(--size-xl);
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
+  display: flex;
+  gap: var(--size-lg);
+  margin-block-end: var(--size-xl);
+}
+.search > input {
+  flex-grow: 1;
+  height: 50px;
+  border: 1px solid #eaeaeb;
+  border-radius: 6px;
+  padding: var(--size-xs);
+  outline: none;
+}
+.search > .dateRange {
+  align-self: flex-end;
+}
+
+.tableWrapper {
+  overflow: auto;
+  width: 100%;
+}
+
+table {
+  outline: 1px solid var(--color-grey);
+  margin: 1px; /* this is to avoid a glitch with the outline when mobile */
+  width: calc(100% - 2px);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+/* add padding to every item (includes header) */
+table > * > * > * {
+  padding: var(--size-sm);
+}
+
+/* add a line between every item */
+table > * > *:not(:last-child) {
+  border-bottom: 1px solid var(--color-grey);
+}
+
+thead {
+  background-color: var(--color-primary);
+}
+
+th {
+  text-align: left;
+  color: white;
+  border-bottom: 1px solid var(--color-grey);
+  font-weight: normal;
+  font-size: large;
+}
+
+/* for taking minimum space */
+td.min {
+  width: 1%;
+  white-space: nowrap;
+}
+
+table .click {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .search {
+    flex-direction: column;
+  }
+}
