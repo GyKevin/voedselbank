@@ -10,7 +10,7 @@ import "vue-datepicker-ui/lib/vuedatepickerui.css";
 import VueDatepickerUi from "vue-datepicker-ui";
 
 function getData(searchQuery, dateRange) {
-  const query = `search=${searchQuery ?? ""}&date=${dateRange ?? ""}`;
+  const query = `search=${searchQuery ?? ""}&date=${dateRange?.[0] ?? ""}&date=${dateRange?.[1] ?? ""}`;
 
   const {
     data: pakketten,
@@ -35,8 +35,6 @@ export default {
         day: "numeric",
         year: "numeric",
       },
-      search: "",
-      selectedDate: [null, null],
     };
   },
   components: {
@@ -45,30 +43,38 @@ export default {
   setup() {
     library.add(faArrowRight, faSquarePlus);
 
+    // this code is such a pain in the ass
+    // even GPT-4 needed to help me 5 times
+    const search = ref("");
+    const selectedDate = ref([null, null]);
     const result = reactive(getData());
 
-    console.log(result);
-
     watch(
-      () => [this.search, this.selectedDate],
+      () => [search.value, selectedDate.value],
       () => {
-        Object.assign(result, getData(this.search, this.selectedDate));
+        Object.assign(result, getData(search.value, selectedDate.value));
       },
       { deep: true }
     );
 
+    const pakketten = computed(() => result.pakketten);
+
     return {
       ...result,
+      pakketten,
+      search,
+      selectedDate,
       refresh: () => {
-        Object.assign(result, getData(this.search, this.selectedDate));
+        Object.assign(result, getData(search.value, selectedDate.value));
+      },
+      onSearchChange: (e) => {
+        search.value = e.target.value;
+        result.refresh();
+      },
+      onDateReset: () => {
+        selectedDate.value = [null, null];
       },
     };
-  },
-  methods: {
-    onSearchChange(e) {
-      this.search = e.target.value;
-      this.refresh();
-    },
   },
 };
 </script>
@@ -78,20 +84,21 @@ export default {
     <h4>Gemaakte Voedsel Pakketten Overzicht</h4>
   </div>
 
-  <div v-if="!!pakketten">
-    <div class="search">
-      <input type="text" placeholder="Search" @input="onSearchChange" />
-      <Datepicker
-        v-model="selectedDate"
-        :range="true"
-        lang="dut"
-        position="bottom right"
-        :circle="true"
-        :showClearButton="true"
-        class="dateRange"
-      />
-    </div>
+  <div class="search">
+    <input type="text" placeholder="Search" @input="onSearchChange" />
+    <Datepicker
+      v-model="selectedDate"
+      :range="true"
+      lang="dut"
+      position="bottom right"
+      :circle="true"
+      :showClearButton="true"
+      class="dateRange"
+      @reset="onDateReset"
+    />
+  </div>
 
+  <div v-if="!!pakketten">
     <div class="tableWrapper">
       <table>
         <thead>
@@ -135,6 +142,7 @@ export default {
     </div>
   </div>
 
+  <br />
   <p v-if="error">{{ error }}</p>
   <p v-if="pending">Loading...</p>
 </template>
