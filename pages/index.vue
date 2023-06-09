@@ -11,7 +11,7 @@
     <h3 v-if="loggedIn === true">Welkom, {{ username }}!</h3>
     <span class="slogan">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
        Dignissimos nisi sequi nulla delectus esse adipisci quidem modi tempore reprehenderit
-        sint itaque assumenda, atque aperiam laudantium quae ad eos repellendus natus.  
+        sint itaque assumenda, atque aperiam laudantium quae ad eos repellendus natus.
     </span>
     </div>
   </div>

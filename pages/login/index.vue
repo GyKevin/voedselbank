@@ -82,7 +82,9 @@ export default {
         })
         const cookieStatus = document.cookie.includes('user_id');
         if (cookieStatus) {
-          this.$router.push('/')
+          this.$router.push('/').then(() => {
+            window.location.reload()
+          })
         } else {
           this.login_error = true
         }
@@ -114,9 +116,10 @@ export default {
                   password: this.pass,
                   confirmpassword: this.confpass
               })
+          }).then(() => {
+          window.location.reload()
           })
           // console.log(data, pending, error)
-          window.location.reload()
         }
     }
 }
