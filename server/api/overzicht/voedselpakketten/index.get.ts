@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const query: TQuery = getQuery(event);
 
   const dateOne = query.date?.[0] ? formatDate(query.date[0]) : null;
-  const dateTwo = query.date?.[1] ? formatDate(query.date[1]) : null;
+  const dateTwo = query.date?.[1] ? formatDate(query.date[1], true) : null;
 
   try {
     const [results, fields] = await con.promise().execute(
@@ -33,9 +33,14 @@ export default defineEventHandler(async (event) => {
   }
 });
 
-function formatDate(dateString: string) {
+function formatDate(dateString: string, maxTime?: boolean) {
   const date = new Date(dateString);
   const formattedDate = date.toISOString().slice(0, 19).replace("T", " ");
+
+  if (maxTime) {
+    const _formattedDate = formattedDate.split(" ")[0] + " 23:59:59";
+    return _formattedDate;
+  }
 
   return formattedDate;
 }

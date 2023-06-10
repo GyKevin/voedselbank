@@ -10,7 +10,10 @@ export default {
       naamRules: yup.string().required(),
       telefoonRules: yup.number().required(),
       adresRules: yup.string().required(),
-      postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
+      postcodeRules: yup
+        .string()
+        .required()
+        .matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
       emailRules: yup.string().email().required(),
       volwassenenRules: yup.number().required().integer().min(0),
       jongerenRules: yup.number().required().integer().min(0),
@@ -25,7 +28,7 @@ export default {
       pending,
       error,
       refresh,
-    } = useFetch(`/api/overzicht/gezinnen/${route.params.gezinId}`, {
+    } = useFetch(`/api/overzicht/voedselpakketten/${route.params.pakketId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
