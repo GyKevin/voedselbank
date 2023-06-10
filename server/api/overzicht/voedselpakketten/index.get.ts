@@ -10,10 +10,8 @@ export default defineEventHandler(async (event) => {
   // @ts-ignore
   const query: TQuery = getQuery(event);
 
-  console.log(query);
-
-  const dateOne = query.date[0] ? formatDate(query.date[0]) : null;
-  const dateTwo = query.date[1] ? formatDate(query.date[1]) : null;
+  const dateOne = query.date?.[0] ? formatDate(query.date[0]) : null;
+  const dateTwo = query.date?.[1] ? formatDate(query.date[1]) : null;
 
   try {
     const [results, fields] = await con.promise().execute(

@@ -1,31 +1,8 @@
 <style src="./index.css" scoped />
 
 <script>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-import { faArrowRight, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-
 import "vue-datepicker-ui/lib/vuedatepickerui.css";
 import VueDatepickerUi from "vue-datepicker-ui";
-
-function getData(searchQuery, dateRange) {
-  const query = `search=${searchQuery ?? ""}&date=${dateRange?.[0] ?? ""}&date=${dateRange?.[1] ?? ""}`;
-
-  const {
-    data: pakketten,
-    pending,
-    error,
-    refresh,
-  } = useFetch(`/api/overzicht/voedselpakketten?${query}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  return { pakketten, pending, error, refresh };
-}
 
 export default {
   data() {
@@ -41,8 +18,6 @@ export default {
     Datepicker: VueDatepickerUi,
   },
   setup() {
-    library.add(faArrowRight, faSquarePlus);
-
     // this code is such a pain in the ass
     // even GPT-4 needed to help me 5 times
     const search = ref("");
@@ -77,6 +52,24 @@ export default {
     };
   },
 };
+
+function getData(searchQuery, dateRange) {
+  const query = `search=${searchQuery ?? ""}&date=${dateRange?.[0] ?? ""}&date=${dateRange?.[1] ?? ""}`;
+
+  const {
+    data: pakketten,
+    pending,
+    error,
+    refresh,
+  } = useFetch(`/api/overzicht/voedselpakketten?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return { pakketten, pending, error, refresh };
+}
 </script>
 
 <template>
