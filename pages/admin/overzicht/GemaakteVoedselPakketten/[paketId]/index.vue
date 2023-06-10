@@ -117,11 +117,6 @@ export default {
     </Form>
   </div>
 
-  <!-- loading -->
-  <div v-if="pending">
-    <h4>Loading...</h4>
-  </div>
-
   <!-- error -->
   <div v-if="error">
     <h4>Error</h4>

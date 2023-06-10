@@ -137,5 +137,4 @@ function getData(searchQuery, dateRange) {
 
   <br />
   <p v-if="error">{{ error }}</p>
-  <p v-if="pending">Loading...</p>
 </template>

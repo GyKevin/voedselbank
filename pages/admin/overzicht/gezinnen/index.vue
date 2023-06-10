@@ -29,7 +29,6 @@ export default {};
   </div>
 
   <p v-if="error">{{ error }}</p>
-  <p v-if="pending">Loading...</p>
   <div v-if="!!users" class="tableWrapper">
     <table>
       <thead>
