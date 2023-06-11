@@ -1,50 +1,70 @@
-h4 {
+.container > *:not(:last-child) {
   margin-block-end: var(--size-xl);
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+.container h4 {
+  margin-block-end: 0 !important;
+}
+.container h5 {
+  font-weight: normal;
 }
 
-form .formContent {
-  display: grid;
-  gap: var(--size-lg);
-  grid-template-columns: 1fr 1fr;
-  margin-block-end: var(--size-xl);
+.dateInfo {
+  border-collapse: collapse;
+}
+.dateInfo tbody tr:not(:last-child) {
+  border-bottom: 1rem solid transparent; /* table elements do not accept margin so i use border as a hack */
+}
+.dateInfo tbody tr td:not(:last-child) {
+  border-right: 1.5rem solid transparent; /* table elements do not accept margin so i use border as a hack */
 }
 
-form .formContent > * {
-  display: flex;
-  flex-direction: column;
+.tableWrapper {
+  overflow: auto;
+  width: 100%;
 }
 
-form .formContent > * > input {
-  height: var(--size-xl);
-}
-
-form .formContent > * > input {
-  background-color: var(--color-light-grey);
-  border: 1px solid var(--color-grey);
+.tableWrapper table {
+  outline: 1px solid var(--color-grey);
+  margin: 1px; /* this is to avoid a glitch with the outline when mobile */
+  width: calc(100% - 2px);
   border-radius: var(--border-radius);
-  font-size: var(--font-size-1);
-}
-form .formContent > * > input:focus {
-  border: 1px solid var(--color-dark-grey);
-  outline: none;
+  overflow: hidden;
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-form .formContent > * > label {
-  color: var(--color-dark-grey);
+/* add padding to every item (includes header) */
+.tableWrapper table > * > * > * {
+  padding: var(--size-sm);
 }
 
-form .formContent > * > span[role="alert"] {
-  font-size: smaller;
-  color: var(--color-red);
+/* add a line between every item */
+.tableWrapper table > * > *:not(:last-child) {
+  border-bottom: 1px solid var(--color-grey);
+}
+
+.tableWrapper thead {
+  background-color: var(--color-primary);
+}
+
+.tableWrapper th {
+  text-align: left;
+  color: white;
+  border-bottom: 1px solid var(--color-grey);
+  font-weight: normal;
+  font-size: large;
+}
+
+/* for taking minimum space */
+.tableWrapper td.min {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.tableWrapper table .click {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {
-  form .formContent {
-    grid-template-columns: 1fr;
-  }
 }
