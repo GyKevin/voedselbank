@@ -1,13 +1,5 @@
 <style src="./Button.css" scoped />
 
-<script setup>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-
-library.add(fas);
-</script>
-
 <script>
 export default {
   methods: {

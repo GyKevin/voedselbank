@@ -98,6 +98,7 @@ and provide hover animation
   padding: 1rem;
   width: auto;
   cursor: pointer;
+  line-height: 1.3em;
 
   position: relative;
 }
