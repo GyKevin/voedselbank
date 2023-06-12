@@ -74,7 +74,7 @@ function getData(searchQuery, dateRange) {
 
 <template>
   <div class="header">
-    <h4>Gemaakte Voedsel Pakketten Overzicht</h4>
+    <h4>Voedsel Pakketten Overzicht</h4>
   </div>
 
   <div class="search">
