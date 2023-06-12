@@ -113,7 +113,7 @@ function getData(searchQuery, dateRange) {
           <tr
             v-for="pakket in pakketten"
             class="click"
-            @click.native="navigateTo(`/admin/overzicht/GemaakteVoedselPakketten/${pakket.id}`)"
+            @click.native="navigateTo(`/admin/overzicht/VoedselPakketten/${pakket.id}`)"
           >
             <td class="min">{{ pakket.id ?? "-" }}</td>
             <td>{{ pakket.klanten_naam ?? "-" }}</td>
