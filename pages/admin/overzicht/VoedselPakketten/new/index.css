@@ -24,6 +24,10 @@ form .formContent > * > select:not(select[multiple]) {
   height: var(--size-xl);
 }
 
+form .formContent > * > select[multiple] {
+  max-height: var(--size-2xl);
+}
+
 form .formContent > * > input,
 form .formContent > * > select {
   background-color: var(--color-light-grey);

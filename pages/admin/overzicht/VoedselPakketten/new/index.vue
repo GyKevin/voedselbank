@@ -4,26 +4,13 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
-let options = [].slice.call(document.querySelectorAll(`select[name="producten"] option`));
-options.forEach(function (element) {
-  element.addEventListener(
-    "mousedown",
-    function (e) {
-      e.preventDefault();
-      element.parentElement.focus();
-      this.selected = !this.selected;
-      return false;
-    },
-    false
-  );
-});
-
 export default {
   data() {
     return {
       klantRules: yup.string().required(),
       aanmaakDatumRules: yup.date().required(),
       productenRules: yup.array().required(),
+      selectedProducten: [],
     };
   },
   components: {
@@ -46,6 +33,19 @@ export default {
       }).then((data) => {
         navigateTo("/admin/overzicht/gezinnen", { replace: true });
       });
+    },
+    isSelected(item) {
+      console.log(this.selectedProducten, item);
+      console.log(this.selectedProducten.includes(item));
+      return this.selectedProducten.includes(item);
+    },
+    selection(e) {
+      const el = e.target.value;
+      if (this.selectedProducten.includes(el)) {
+        this.selectedProducten = this.selectedProducten.filter((s) => s !== el);
+      } else {
+        this.selectedProducten = [...this.selectedProducten, el];
+      }
     },
   },
   setup() {
@@ -87,14 +87,23 @@ export default {
         <ErrorMessage name="aanmaak" />
       </div>
 
+      {{ selectedProducten }}
+
       <div>
         <label for="producten">Producten</label>
-        <Field name="producten" as="select" multiple :rules="productenRules">
+        <Field
+          name="producten"
+          as="select"
+          multiple
+          :value="selectedProducten"
+          @click="selection"
+          :rules="productenRules"
+        >
           <option
             v-for="product in producten"
             :key="product.ean"
             :value="product.ean"
-            :selected="value && value.includes(product.ean)"
+            :selected="selectedProducten.includes(product.ean)"
           >
             {{ product.naam }}
           </option>
