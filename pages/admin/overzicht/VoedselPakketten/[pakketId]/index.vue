@@ -61,7 +61,7 @@ export default {
         <tr>
           <td>Eisen</td>
           <td>
-            {{ voedselpakket.eisen.join(", ") ?? "-" }}
+            {{ voedselpakket.eisen.join(", ") || "-" }}
           </td>
         </tr>
       </tbody>
