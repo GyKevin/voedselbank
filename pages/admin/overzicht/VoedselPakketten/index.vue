@@ -75,6 +75,12 @@ function getData(searchQuery, dateRange) {
 <template>
   <div class="header">
     <h4>Voedsel Pakketten Overzicht</h4>
+    <Button
+      @click="() => navigateTo('/admin/overzicht/VoedselPakketten/new', { replace: true })"
+      :icon="['fas', 'square-plus']"
+    >
+      Toevoegen
+    </Button>
   </div>
 
   <div class="search">
