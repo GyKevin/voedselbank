@@ -62,8 +62,6 @@ export default defineEventHandler(async (event) => {
       [event.context.params.pakketId]
     );
 
-    console.log(results);
-
     const newResult = {
       voedselpakket_id: results[0]?.voedselpakket_id ?? null,
       datum_aanmaaken: results[0]?.datum_aanmaaken ?? null,
