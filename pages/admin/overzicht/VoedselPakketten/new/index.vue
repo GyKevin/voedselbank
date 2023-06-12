@@ -3,25 +3,40 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
-import Multiselect from "vue-multiselect";
+
+let options = [].slice.call(document.querySelectorAll(`select[name="producten"] option`));
+options.forEach(function (element) {
+  element.addEventListener(
+    "mousedown",
+    function (e) {
+      e.preventDefault();
+      element.parentElement.focus();
+      this.selected = !this.selected;
+      return false;
+    },
+    false
+  );
+});
 
 export default {
   data() {
     return {
-      naamRules: yup.string().required(),
+      klantRules: yup.string().required(),
       aanmaakDatumRules: yup.date().required(),
-      productenRules: yup.string().required(),
-      selectedProducten: [],
+      productenRules: yup.array().required(),
     };
   },
   components: {
     Form,
     Field,
     ErrorMessage,
-    Multiselect,
   },
   methods: {
     onSubmit(values) {
+      console.log(values);
+
+      return;
+
       useFetch("/api/overzicht/gezinnen", {
         method: "POST",
         headers: {
@@ -60,26 +75,29 @@ export default {
     <div class="formContent">
       <div>
         <label for="klant">Klant</label>
-        <Field name="klant" as="select" :rules="naamRules">
+        <Field name="klant" as="select" :rules="klantRules">
           <option v-for="klant in klanten" :value="klant.id">{{ klant.naam }}</option>
         </Field>
         <ErrorMessage name="klant" />
       </div>
 
       <div>
-        <label for="telefoon">Telefoon</label>
-        <Field type="tel" name="telefoon" :rules="telefoonRules" />
-        <ErrorMessage name="telefoon" />
+        <label for="aanmaak">Aanmaak datum</label>
+        <Field type="date" name="aanmaak" :rules="aanmaakDatumRules" />
+        <ErrorMessage name="aanmaak" />
       </div>
 
       <div>
         <label for="producten">Producten</label>
-        <Field name="producten" v-slot="{ selectedProducten }" :rules="adresRules">
-          <Multiselect
-            v-bind="selectedProducten"
-            v-model="selectedProducten.value"
-            :options="producten.map((product) => ({ label: product.naam, value: product.ean }))"
-          ></Multiselect>
+        <Field name="producten" as="select" multiple :rules="productenRules">
+          <option
+            v-for="product in producten"
+            :key="product.ean"
+            :value="product.ean"
+            :selected="value && value.includes(product.ean)"
+          >
+            {{ product.naam }}
+          </option>
         </Field>
         <ErrorMessage name="producten" />
       </div>
