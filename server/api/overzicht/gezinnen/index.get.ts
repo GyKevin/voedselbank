@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const con = getMysqlConnection();
 
   try {
-    const [results, fields] = await con.promise().query("SELECT id, naam, telefoon, email, postcode FROM klanten");
+    const [results, fields] = await con.promise().execute("SELECT id, naam, telefoon, email, postcode FROM klanten");
 
     return results;
   } catch (error) {

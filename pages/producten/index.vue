@@ -3,20 +3,25 @@
 <template>
   <div class="pwindow">
     <h3>Producten overzicht</h3>
-      <div class="product_table">
+      <div class="product_table" v-if="!pending">
         <table>
           <thead>
             <tr>
+              <th>EAN</th>
               <th>Naam</th>
-              <th>Prijs</th>
+              <th>Categorie</th>
               <th>Aantal</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(product) in items">
-              <td>{{ product.name }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.quantity }}</td>
+            <tr v-for="(product, index) in items">
+              <td>{{ product.ean }}</td>
+              <td>{{ product.naam }}</td>
+              <td>{{ product.categorie_naam }}</td>
+              <td>{{ product.aantal }}</td>
+              <td> 
+                  <button class="btn btn-primary" @click="editProduct(product)">Edit</button>
+            </td>
             </tr>
           </tbody>
         </table>
@@ -26,13 +31,23 @@
 
 <script>
 export default {
-  data() {
+  setup() {
+    const { data, pending, error, refresh } = useFetch('/api/producten', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
     return {
-      items: [
-        { name: "Product 1", price: "$0.21", quantity: 1 },
-        { name: "Product 2", price: "$20.00", quantity: 200 }
-      ]
+      items: data,
+      pending,
+      error,
+      refresh
     }
+  },
+  methods: {
+    editProduct(product) {
+      this.$router.push(`producten/edit/${product.ean}`, { params: { ean: product.ean } })
+    },
   }
 }
 </script>
