@@ -3,24 +3,22 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import Multiselect from "vue-multiselect";
 
 export default {
   data() {
     return {
       naamRules: yup.string().required(),
-      telefoonRules: yup.number().required(),
-      adresRules: yup.string().required(),
-      postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
-      emailRules: yup.string().email().required(),
-      volwassenenRules: yup.number().required().integer().min(0),
-      jongerenRules: yup.number().required().integer().min(0),
-      babiesRules: yup.number().required().integer().min(0),
+      aanmaakDatumRules: yup.date().required(),
+      productenRules: yup.string().required(),
+      selectedProducten: [],
     };
   },
   components: {
     Form,
     Field,
     ErrorMessage,
+    Multiselect,
   },
   methods: {
     onSubmit(values) {
@@ -35,6 +33,23 @@ export default {
       });
     },
   },
+  setup() {
+    const { data: klanten } = useFetch("/api/klanten", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const { data: producten } = useFetch("/api/producten", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { klanten, producten };
+  },
 };
 </script>
 
@@ -44,9 +59,11 @@ export default {
   <Form @submit="onSubmit">
     <div class="formContent">
       <div>
-        <label for="naam">Naam</label>
-        <Field type="text" name="naam" :rules="naamRules" />
-        <ErrorMessage name="naam" />
+        <label for="klant">Klant</label>
+        <Field name="klant" as="select" :rules="naamRules">
+          <option v-for="klant in klanten" :value="klant.id">{{ klant.naam }}</option>
+        </Field>
+        <ErrorMessage name="klant" />
       </div>
 
       <div>
@@ -56,39 +73,15 @@ export default {
       </div>
 
       <div>
-        <label for="adres">Adres</label>
-        <Field type="text" name="adres" :rules="adresRules" />
-        <ErrorMessage name="adres" />
-      </div>
-
-      <div>
-        <label for="postcode">Postcode</label>
-        <Field type="text" name="postcode" :rules="postcodeRules" />
-        <ErrorMessage name="postcode" />
-      </div>
-
-      <div>
-        <label for="email">Email</label>
-        <Field type="email" name="email" :rules="emailRules" />
-        <ErrorMessage name="email" />
-      </div>
-
-      <div>
-        <label for="volwassenen">Volwassenen</label>
-        <Field type="number" name="volwassenen" :rules="volwassenenRules" />
-        <ErrorMessage name="volwassenen" />
-      </div>
-
-      <div>
-        <label for="jongeren">Jongeren</label>
-        <Field type="number" name="jongeren" :rules="jongerenRules" />
-        <ErrorMessage name="jongeren" />
-      </div>
-
-      <div>
-        <label for="babies">Babies</label>
-        <Field type="number" name="babies" :rules="babiesRules" />
-        <ErrorMessage name="babies" />
+        <label for="producten">Producten</label>
+        <Field name="producten" v-slot="{ selectedProducten }" :rules="adresRules">
+          <Multiselect
+            v-bind="selectedProducten"
+            v-model="selectedProducten.value"
+            :options="producten.map((product) => ({ label: product.naam, value: product.ean }))"
+          ></Multiselect>
+        </Field>
+        <ErrorMessage name="producten" />
       </div>
     </div>
 

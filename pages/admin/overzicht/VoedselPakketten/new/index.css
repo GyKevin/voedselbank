@@ -19,17 +19,20 @@ form .formContent > * {
   flex-direction: column;
 }
 
-form .formContent > * > input {
+form .formContent > * > input,
+form .formContent > * > select:not(select[multiple]) {
   height: var(--size-xl);
 }
 
-form .formContent > * > input {
+form .formContent > * > input,
+form .formContent > * > select {
   background-color: var(--color-light-grey);
   border: 1px solid var(--color-grey);
   border-radius: var(--border-radius);
   font-size: var(--font-size-1);
 }
-form .formContent > * > input:focus {
+form .formContent > * > input:focus,
+form .formContent > * > select:focus {
   border: 1px solid var(--color-dark-grey);
   outline: none;
 }
