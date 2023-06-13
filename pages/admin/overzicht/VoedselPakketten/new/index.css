@@ -14,7 +14,7 @@ form .formContent {
   margin-block-end: var(--size-xl);
 }
 
-.full-grip-width {
+.full-grid-width {
   grid-column: span 2;
 }
 
@@ -52,19 +52,6 @@ form .formContent > * > label {
 form .formContent > * > span[role="alert"] {
   font-size: smaller;
   color: var(--color-red);
-}
-
-option {
-  padding: 0.5rem;
-}
-option:hover,
-option:focus {
-  background-color: hsl(146, 55%, 35%) !important;
-  color: white !important;
-}
-.selected {
-  background-color: var(--color-primary) !important;
-  color: white !important;
 }
 
 .tableWrapper {

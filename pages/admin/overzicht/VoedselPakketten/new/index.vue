@@ -9,7 +9,6 @@ export default {
     return {
       klantRules: yup.string().required(),
       aanmaakDatumRules: yup.date().required(),
-      productenRules: yup.array().required(),
       selectedProducten: new Set(),
     };
   },
@@ -25,20 +24,18 @@ export default {
         producten: [...this.selectedProducten],
       };
 
-      console.log(newValues);
-      return;
-      useFetch("/api/overzicht/gezinnen", {
+      useFetch("/api/overzicht/voedselpakketten", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(newValues),
       }).then((data) => {
-        navigateTo("/admin/overzicht/gezinnen", { replace: true });
+        navigateTo("/admin/overzicht/VoedselPakketten", { replace: true });
       });
     },
-    isSelected(item) {
-      return !![...this.selectedProducten].some((obj) => obj.ean === item);
+    getProductFromEan(ean) {
+      return this.producten[this.producten.findIndex((i) => i.ean === ean)];
     },
     removeSelection(ean) {
       this.selectedProducten.forEach((item) => {
@@ -51,34 +48,18 @@ export default {
       const el = e.target.value;
       const index = this.producten.findIndex((i) => i.ean === el);
 
-      // if ean exists in set, remove set
-      // if not, create one
-      if ([...this.selectedProducten].some((obj) => obj.ean === el)) {
-        this.removeSelection(el);
-      } else {
-        this.selectedProducten.add({
-          naam: this.producten[index]?.naam,
-          ean: el,
-          aantal: 1,
-        });
-      }
-    },
-
-    changeSelectionAantal(ean, e) {
-      let oldSetItem;
-
-      // save the old set item in a variable and delete it from the set
-      this.selectedProducten.forEach((item) => {
-        if (item.ean === ean) {
-          oldSetItem = item;
-          this.selectedProducten.delete(item);
-        }
-      });
-
-      // add the old set item and change the aantal to the new aantal
       this.selectedProducten.add({
-        ...oldSetItem,
-        aantal: e.target.value,
+        naam: this.producten[index]?.naam,
+        ean: el,
+        aantal: 1,
+        categorie: this.producten[index]?.categorie_id,
+      });
+    },
+    changeSelectionAantal(ean, e) {
+      this.selectedProducten.forEach((obj) => {
+        if (obj.ean === ean) {
+          obj.aantal = e.target.value;
+        }
       });
     },
   },
@@ -116,35 +97,22 @@ export default {
       </div>
 
       <div>
-        <label for="aanmaak">Aanmaak datum</label>
-        <Field type="date" name="aanmaak" :rules="aanmaakDatumRules" />
-        <ErrorMessage name="aanmaak" />
+        <label for="aanmaak_datum">Aanmaak datum</label>
+        <Field type="date" name="aanmaak_datum" :rules="aanmaakDatumRules" />
+        <ErrorMessage name="aanmaak_datum" />
       </div>
 
       <div>
-        <label for="producten">Producten</label>
-        <Field
-          name="producten"
-          as="select"
-          multiple
-          :value="selectedProducten"
-          @click="selection"
-          :rules="productenRules"
-        >
-          <option
-            v-for="product in producten"
-            :key="product.ean"
-            :value="product.ean"
-            :class="{ selected: isSelected(product.ean) }"
-            :disabled="product.aantal <= 0"
-          >
+        <label for="producten">Selecteer producten</label>
+        <Field name="producten" as="select" :value="selectedProducten" @change="selection">
+          <option v-for="product in producten" :key="product.ean" :value="product.ean" :disabled="product.aantal <= 0">
             {{ product.naam }}
           </option>
         </Field>
         <ErrorMessage name="producten" />
       </div>
 
-      <div class="full-grip-width">
+      <div class="full-grid-width">
         <label>Geselecteerde producten</label>
         <div class="tableWrapper">
           <table>
@@ -160,11 +128,14 @@ export default {
               <tr v-for="selectedProduct in selectedProducten">
                 <td>{{ selectedProduct.naam ?? "-" }}</td>
                 <td>{{ selectedProduct.ean ?? "-" }}</td>
-                <td class="min">
+                <td>
                   <input
                     type="number"
                     @input="(e) => changeSelectionAantal(selectedProduct.ean, e)"
                     :value="selectedProduct.aantal"
+                    min="0"
+                    :max="getProductFromEan(selectedProduct.ean).aantal"
+                    required
                   />
                 </td>
                 <td class="min">
