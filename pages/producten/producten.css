@@ -1,36 +1,47 @@
-.product_table {
-    padding: 3rem;
-    display: flex;
-    justify-content: center;
-    background-color: var(--color-light-grey);
-    border-radius: 12px;
-}
-table {
-    width: 80%;
-    text-align: center;
+h4 {
+    margin-block-end: var(--size-xl);
+  }
+  
+  .tableWrapper {
+    overflow: auto;
+    width: 100%;
+  }
+  
+  table {
+    outline: 1px solid var(--color-grey);
+    margin: 1px; /* this is to avoid a glitch with the outline when mobile */
+    width: calc(100% - 2px);
+    border-radius: var(--border-radius);
+    overflow: hidden;
     border-spacing: 0;
-    border-collapse: collapse;;
-    border: 2px solid var(--color-grey);
-    border-radius:6px;
-}
-
-th {
-    border: 2px solid var(--color-grey);
-    margin: 0;
-    padding: 0.5rem;
+    border-collapse: collapse;
+  }
+  
+  /* add padding to every item (includes header) */
+  table > * > * > * {
+    padding: var(--size-sm);
+  }
+  
+  /* add a line between every item */
+  table > * > *:not(:last-child) {
+    border-bottom: 1px solid var(--color-grey);
+  }
+  
+  thead {
     background-color: var(--color-primary);
-    color: whitesmoke;
-}
-
-td {
-    border: 2px solid var(--color-grey);
-    margin: 0;
-    padding: 0.5rem;
-    background-color: white;
-}
-
-
-
-
-
-
+  }
+  
+  th {
+    text-align: left;
+    color: white;
+    border-bottom: 1px solid var(--color-grey);
+    font-weight: normal;
+    font-size: large;
+  }
+  
+  /* for taking minimum space */
+  td.min {
+    width: 1%;
+    white-space: nowrap;
+  }
+  
