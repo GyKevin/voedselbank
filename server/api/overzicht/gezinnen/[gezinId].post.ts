@@ -19,8 +19,8 @@ export default defineEventHandler(async (event) => {
     adres: yup.string().required(),
     postcode: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/),
     email: yup.string().email().required(),
-    volwassenen: yup.number().required().integer(),
-    jongeren: yup.number().required().integer(),
+    volwassenen: yup.number().required().integer().min(0),
+    jongeren: yup.number().required().integer().min(0),
     babies: yup.number().required().integer().min(0),
   });
 

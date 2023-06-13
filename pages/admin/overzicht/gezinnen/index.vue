@@ -1,13 +1,6 @@
 <style src="./index.css" scoped />
 
 <script setup>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-import { faArrowRight, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faArrowRight, faSquarePlus);
-
 const {
   data: users,
   pending,
@@ -36,7 +29,6 @@ export default {};
   </div>
 
   <p v-if="error">{{ error }}</p>
-  <p v-if="pending">Loading...</p>
   <div v-if="!!users" class="tableWrapper">
     <table>
       <thead>
