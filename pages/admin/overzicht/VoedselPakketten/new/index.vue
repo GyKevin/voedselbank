@@ -10,7 +10,7 @@ export default {
       klantRules: yup.string().required(),
       aanmaakDatumRules: yup.date().required(),
       productenRules: yup.array().required(),
-      selectedProducten: [],
+      selectedProducten: new Set(),
     };
   },
   components: {
@@ -20,10 +20,13 @@ export default {
   },
   methods: {
     onSubmit(values) {
-      console.log(values);
+      const newValues = {
+        ...values,
+        producten: [...this.selectedProducten],
+      };
 
+      console.log(newValues);
       return;
-
       useFetch("/api/overzicht/gezinnen", {
         method: "POST",
         headers: {
@@ -35,17 +38,48 @@ export default {
       });
     },
     isSelected(item) {
-      console.log(this.selectedProducten, item);
-      console.log(this.selectedProducten.includes(item));
-      return this.selectedProducten.includes(item);
+      return !![...this.selectedProducten].some((obj) => obj.ean === item);
+    },
+    removeSelection(ean) {
+      this.selectedProducten.forEach((item) => {
+        if (item.ean === ean) {
+          this.selectedProducten.delete(item);
+        }
+      });
     },
     selection(e) {
       const el = e.target.value;
-      if (this.selectedProducten.includes(el)) {
-        this.selectedProducten = this.selectedProducten.filter((s) => s !== el);
+      const index = this.producten.findIndex((i) => i.ean === el);
+
+      // if ean exists in set, remove set
+      // if not, create one
+      if ([...this.selectedProducten].some((obj) => obj.ean === el)) {
+        this.removeSelection(el);
       } else {
-        this.selectedProducten = [...this.selectedProducten, el];
+        this.selectedProducten.add({
+          naam: this.producten[index]?.naam,
+          ean: el,
+          aantal: 1,
+        });
       }
+    },
+
+    changeSelectionAantal(ean, e) {
+      let oldSetItem;
+
+      // save the old set item in a variable and delete it from the set
+      this.selectedProducten.forEach((item) => {
+        if (item.ean === ean) {
+          oldSetItem = item;
+          this.selectedProducten.delete(item);
+        }
+      });
+
+      // add the old set item and change the aantal to the new aantal
+      this.selectedProducten.add({
+        ...oldSetItem,
+        aantal: e.target.value,
+      });
     },
   },
   setup() {
@@ -69,7 +103,7 @@ export default {
 </script>
 
 <template>
-  <h4>Edit gezin</h4>
+  <h4>Nieuwe voedsel pakket maken</h4>
 
   <Form @submit="onSubmit">
     <div class="formContent">
@@ -87,8 +121,6 @@ export default {
         <ErrorMessage name="aanmaak" />
       </div>
 
-      {{ selectedProducten }}
-
       <div>
         <label for="producten">Producten</label>
         <Field
@@ -103,12 +135,48 @@ export default {
             v-for="product in producten"
             :key="product.ean"
             :value="product.ean"
-            :selected="selectedProducten.includes(product.ean)"
+            :class="{ selected: isSelected(product.ean) }"
+            :disabled="product.aantal <= 0"
           >
             {{ product.naam }}
           </option>
         </Field>
         <ErrorMessage name="producten" />
+      </div>
+
+      <div class="full-grip-width">
+        <label>Geselecteerde producten</label>
+        <div class="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Naam</th>
+                <th>Ean</th>
+                <th>Aantal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="selectedProduct in selectedProducten">
+                <td>{{ selectedProduct.naam ?? "-" }}</td>
+                <td>{{ selectedProduct.ean ?? "-" }}</td>
+                <td class="min">
+                  <input
+                    type="number"
+                    @input="(e) => changeSelectionAantal(selectedProduct.ean, e)"
+                    :value="selectedProduct.aantal"
+                  />
+                </td>
+                <td class="min">
+                  <Button @click="removeSelection(selectedProduct.ean)" size="small" :icon="['fas', 'xmark']"></Button>
+                </td>
+              </tr>
+              <tr v-if="!selectedProducten[0]">
+                <td class="min">Geen product geselecteerd</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
