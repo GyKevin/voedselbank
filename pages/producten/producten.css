@@ -1,6 +1,18 @@
 h4 {
     margin-block-end: var(--size-xl);
   }
+
+  .search-box{
+    padding-bottom: var(--size-xs);
+  }
+  .search {
+    width: 30%;
+    height: 40px;
+    border: 1px solid #eaeaeb;
+    border-radius: 6px;
+    padding: var(--size-xs);
+    outline: none;
+  }
   
   .tableWrapper {
     overflow: auto;
