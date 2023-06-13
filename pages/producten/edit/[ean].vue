@@ -1,25 +1,40 @@
 <style src="./main.css" scoped />
 <template>
-  <div>
-    <h5>{{ item[0].ean }} - {{ capitalize(item[0].naam) }}</h5>
-
-    <div v-for="(value, key) in item[0]" :key="key">
-      <div v-if="key != 'ean'" class="row">
-        <label>{{ capitalize(key) }}</label>
-        <input
-          type="text"
-          :value="value"
-          @input="
-            (e) => {
-              item[0][key] = e.target.value;
-            }
-          "
-        />
+  <div class="wrapper" v-if="!product_pending">
+    <div class="form">
+      <div class="row">
+        <label>EAN</label>
+        <input type="text" v-model="product[0].ean" />
+      </div>
+      <div class="row">
+        <label>Naam</label>
+        <input type="text" v-model="product[0].naam" />
+      </div>
+      <div class="row">
+        <label>Categorie</label>
+        <select v-model="product[0].categorie_id">
+          <option v-for="categorie in categorien" :key="categorie.id" :value="categorie.id">
+            {{ categorie.naam }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Aantal</label>
+        <input type="text" v-model="product[0].aantal" />
       </div>
     </div>
+    <div v-if="!delete_confirm" class="buttons">
+      <Button :icon="['fas', 'edit']" @click="editProduct(product[0])">Wijzig</Button>
+  
+      <Button :icon="['fas', 'trash-alt']" @click="delete_confirm = true">Verwijder</Button>
+      <Button :icon="['fas', 'xmark']" @click="$router.push('/producten')">Annuleer</Button>
+    </div>
+    <div v-if="delete_confirm" class="warning">
+      <p class="message">Weet je het zeker?</p>
+      <Button :icon="['fas', 'check']" @click="deleteProduct(product[0])">Ja</Button>
+      <Button :icon="['fas', 'check']" @click="delete_confirm = false">nee</Button>
+    </div>
 
-    <button class="btn btn-primary" @click="editProduct(item[0])">Edit</button>
-    <button class="btn btn-primary" @click="$router.push('/producten')">Cancel</button>
   </div>
 </template>
 
@@ -27,21 +42,42 @@
 export default {
   setup() {
     const params = useRoute().params;
-    const { data, pending, error, refresh } = useFetch(`/api/producten/get/${params.ean}`, {
+    const {
+      data: categorien,
+      pending: pendingCategorien,
+      error: errorCategorien,
+      refresh: refreshCategorien,
+    } = useFetch(`/api/categorieen/get`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const { data: product, pending: product_pending, error: product_error, refresh: product_refresh } = useFetch(`/api/producten/get/${params.ean}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
 
     return {
-      item: data,
-      pending,
-      error,
-      refresh,
+
+      // producten,
+      product,
+      product_pending,
+      product_error,
+      product_refresh,
+
+      // categorien,
+      categorien,
+      pendingCategorien,
+      errorCategorien,
+      refreshCategorien,
+    };
+  },
+  data() {
+    return {
+      delete_confirm: false,
     };
   },
   methods: {
     editProduct(product) {
-      console.log(product);
       useFetch(`/api/producten/edit/${product.ean}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,8 +85,12 @@ export default {
       });
       this.$router.push("/producten");
     },
-    capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    deleteProduct(product) {
+      useFetch(`/api/producten/delete/${product.ean}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      this.$router.push("/producten");
     },
   },
 };
