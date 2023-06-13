@@ -14,14 +14,12 @@ export default defineEventHandler(async (event) => {
 
   let userSchema = yup.object({
     id: yup.number().required(),
-    naam: yup.string().required(),
-    telefoon: yup.string().required(),
+    bedrijf_naam: yup.string().required(),
     adres: yup.string().required(),
     postcode: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/),
-    email: yup.string().email().required(),
-    volwassenen: yup.number().required().integer(),
-    jongeren: yup.number().required().integer(),
-    babies: yup.number().required().integer().min(0),
+    contact_naam: yup.string().required(),
+    contact_email: yup.string().email().required(),
+    telefoon_nr: yup.string().required(),
   });
 
   const isValid = await userSchema.validate(body);
@@ -44,17 +42,15 @@ export default defineEventHandler(async (event) => {
     const results = con
       .promise()
       .execute(
-        "UPDATE klanten SET naam = ?, telefoon = ?, adres = ?, postcode = ?, email = ?, volwassenen = ?, jongeren = ?, baby = ? WHERE id = ?",
+        "UPDATE leverancier SET bedrijf_naam = ?, telefoon_nr = ?, adres = ?, postcode = ?, contact_email = ?, contact_naam WHERE id = ?",
         [
-          body.naam,
-          body.telefoon,
+          body.bedrjf_naam,
+          body.telefoon_nr,
           body.adres,
           body.postcode,
-          body.email,
-          body.volwassenen,
-          body.jongeren,
-          body.babies,
-          event.context.params.gezinId,
+          body.contact_email,
+          body.contact_naam,
+          event.context.params.leveringId,
         ]
       );
 

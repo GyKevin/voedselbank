@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 /* import specific icons */
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { NuxtLink } from "~/.nuxt/components";
 
 library.add(faChevronLeft, faCircleUser);
 
@@ -25,7 +24,6 @@ export default {
             this.menuOpen = !this.menuOpen;
         },
     },
-    components: { NuxtLink }
 };
 </script>
 
@@ -58,7 +56,7 @@ export default {
             <NuxtLink to="/producten">Producten overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
-            <NuxtLink to="/admin/overzicht/leveranciers">Leverancieren overzicht</NuxtLink>
+            <NuxtLink to="/admin/leveranciers">Leverancieren overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">

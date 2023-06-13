@@ -1,43 +1,66 @@
-<style src="./leveranciers.css"/>
+<style src="./index.css" scoped />
+
+<script setup>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+import { faArrowRight, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faArrowRight, faSquarePlus);
+
+const {
+  data: leveranciers,
+  pending,
+  error,
+} = useFetch("/api/overzicht/leveranciers", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+</script>
 
 <template>
-    <div class="pwindow">
-      <h3>Leverancieren overzicht</h3>
-      <input class="aanmaak-button" type="button" value="aanmaken">
-        <div class="leveranciers_table">
-          <table>
-            <thead>
-              <tr>
-                <th>Naam</th>
-                <th>Adres</th>
-                <th>contactpersoon</th>
-                <th>email</th>
-                <th>telefoonnummer</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(leverancier) in items" @click.native="navigateTo(`/admin/leveranciers/[id]`)">
-                <td>{{ leverancier.name }}</td>
-                <td>{{ leverancier.adres }}</td>
-                <td>{{ leverancier.contactpersoon }}</td>
-                <td>{{ leverancier.email }}</td>
-                <td>{{ leverancier.telefoonnummer }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        items: [
-          { name: "Product 1", adres:"bananenstraat 20", contactpersoon:"bob", email:"bob@banaan.nl", telefoonnummer:"06123456789" },
-          { name: "Product 2", adres:"chocoladehof 16", contactpersoon:"johan", email:"johan@autism.nl", telefoonnummer:"06123123123" }
-        ]
-      }
-    }
-  }
-  </script>
+  <div class="header">
+    <h4>leveranciers overzicht</h4>
+    <Button  @click="() => navigateTo('/admin/leveranciers/new', { replace: true })" :icon="['fas', 'square-plus']">
+      Toevoegen
+    </Button>
+  </div>
+
+  <p v-if="error">{{ error }}</p>
+  <p v-if="pending">Loading...</p>
+  <div v-if="!!leveranciers" class="tableWrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Contact persoon</th>
+          <th>Email</th>
+          <th>Postcode</th>
+          <th>Adres</th>
+          <th>Telefoon</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="leveranciers in leveranciers" class="click" @click.native="navigateTo(`/admin/leveranciers/${levering.id}`)">
+          <td>{{ leveranciers.bedrijf_naam ?? "-" }}</td>
+          <td>{{ leveranciers.contact_naam ?? "-" }}</td>
+          <td>{{ leveranciers.contact_email ?? "-" }}</td>
+          <td>{{ leveranciers.postcode ?? "-" }}</td>
+          <td>{{ leveranciers.adres ?? "-" }}</td>
+          <td>{{ leveranciers.telefoon_nr ?? "-" }}</td>
+          <td class="min"><font-awesome-icon :icon="['fas', 'arrow-right']" /></td>
+        </tr>
+        <tr v-if="!leveranciers[0]">
+          <td class="min">Geen leveranciers zichtbaar.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
