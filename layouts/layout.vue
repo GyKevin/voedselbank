@@ -68,6 +68,7 @@ export default {
             <NuxtLink to="/producten">Producten overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
+            <NuxtLink to="/admin/leveranciers">Leverancieren overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/VoedselPakketten">Voedsel pakketten overzicht</NuxtLink>
           </div>
 
