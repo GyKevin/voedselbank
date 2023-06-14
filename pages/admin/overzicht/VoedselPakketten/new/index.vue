@@ -4,6 +4,13 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
+/*
+=====================================================================
+ the code here is very complex,
+ if something breaks or needs to be changed please just ask me (Thijn)
+=====================================================================
+*/
+
 export default {
   data() {
     return {
@@ -47,6 +54,8 @@ export default {
     selection(e) {
       const el = e.target.value;
       const index = this.producten.findIndex((i) => i.ean === el);
+
+      if ([...this.selectedProducten].some((obj) => obj.ean === el)) return; // return if ean exists
 
       this.selectedProducten.add({
         naam: this.producten[index]?.naam,
@@ -139,7 +148,13 @@ export default {
                   />
                 </td>
                 <td class="min">
-                  <Button @click="removeSelection(selectedProduct.ean)" size="small" :icon="['fas', 'xmark']"></Button>
+                  <Button
+                    @click="removeSelection(selectedProduct.ean)"
+                    type="button"
+                    size="small"
+                    :icon="['fas', 'xmark']"
+                  ></Button>
+                  <!-- type="button" is needed to avoid onSubmit from running without e.preventDefault() -->
                 </td>
               </tr>
               <tr v-if="!selectedProducten[0]">
