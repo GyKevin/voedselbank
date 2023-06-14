@@ -13,7 +13,14 @@ export default defineEventHandler(async (event) => {
   try {
     const [results, fields] = await con
       .promise()
-      .execute("SELECT * FROM Leverancier where id = ?", [event.context.params.leveringId]);
+      .execute(`
+      SELECT
+        lc.*,
+        l.datum AS levering_datum
+      FROM Leverancier lc
+      LEFT JOIN leveringen l ON l.leverancier_id = lc.id
+      WHERE lc.id = ? 
+      `, [event.context.params.leveranciersid]);
 
     // @ts-ignore
     const _result = results[0];

@@ -13,6 +13,7 @@ export default {
       postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
       contact_emailRules: yup.string().email().required(),
       contact_naamRules: yup.string().required(),
+      datumRules: yup.date().required(),
     };
   },
   components: {
@@ -43,13 +44,13 @@ export default {
     <div class="formContent">
       <div>
         <label for="bedrijfs naam">Naam</label>
-        <Field type="text" name="naam" :rules="bedrijf_naamRules" />
+        <Field type="text" name="bedrijf_naam" :rules="bedrijf_naamRules" />
         <ErrorMessage name="bedrijf naam" />
       </div>
 
       <div>
         <label for="telefoon">Telefoon</label>
-        <Field type="tel" name="telefoon nummer" :rules="telefoon_nrRules" />
+        <Field type="tel" name="telefoon_nr" :rules="telefoon_nrRules" />
         <ErrorMessage name="telefoon nummer" />
       </div>
 
@@ -67,14 +68,20 @@ export default {
 
       <div>
         <label for="email">Email contact persoon</label>
-        <Field type="email" name="email" :rules="contact_emailRules" />
+        <Field type="email" name="contact_email" :rules="contact_emailRules" />
         <ErrorMessage name="email" />
       </div>
 
       <div>
         <label for="contact naam">naam contact persoon</label>
-        <Field type="text" name="contact naam" :rules="contact_naamRules" />
+        <Field type="text" name="contact_naam" :rules="contact_naamRules" />
         <ErrorMessage name="contact naam" />
+      </div>
+
+      <div>
+        <label for="opmerkingen">Eerst volgende leveringsdatum</label>
+        <Field type="date" name="levering_datum" :rules="datum_rules" />
+        <ErrorMessage name="leveringsdatum" />
       </div>
 
     </div>

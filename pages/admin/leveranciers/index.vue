@@ -22,10 +22,8 @@ const {
 
 <template>
   <div class="header">
-    <h4>leveranciers overzicht</h4>
-    <Button  @click="() => navigateTo('/admin/leveranciers/new', { replace: true })" :icon="['fas', 'square-plus']">
-      Toevoegen
-    </Button>
+    <h4>Leveranciers overzicht</h4>
+    <Button  @click="() => navigateTo('/admin/leveranciers/new', { replace: true })" :icon="['fas', 'square-plus']"> Toevoegen </Button>
   </div>
 
   <p v-if="error">{{ error }}</p>
@@ -40,17 +38,26 @@ const {
           <th>Postcode</th>
           <th>Adres</th>
           <th>Telefoon</th>
+          <th>Volgende levering</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="leveranciers in leveranciers" class="click" @click.native="navigateTo(`/admin/leveranciers/${levering.id}`)">
+        <tr v-for="leveranciers in leveranciers" class="click" @click.native="navigateTo(`/admin/leveranciers/${leveranciers.id}`)">
           <td>{{ leveranciers.bedrijf_naam ?? "-" }}</td>
           <td>{{ leveranciers.contact_naam ?? "-" }}</td>
           <td>{{ leveranciers.contact_email ?? "-" }}</td>
           <td>{{ leveranciers.postcode ?? "-" }}</td>
           <td>{{ leveranciers.adres ?? "-" }}</td>
           <td>{{ leveranciers.telefoon_nr ?? "-" }}</td>
+          <td>
+            {{
+              leveranciers.levering_datum
+                ? new Date(leveranciers.levering_datum).toLocaleDateString("en-NL", dateFormatOptions)
+                : "-"
+            }}
+          </td>
           <td class="min"><font-awesome-icon :icon="['fas', 'arrow-right']" /></td>
         </tr>
         <tr v-if="!leveranciers[0]">
@@ -62,5 +69,15 @@ const {
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      dateFormatOptions: {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      },
+    }
+  }
+};
 </script>

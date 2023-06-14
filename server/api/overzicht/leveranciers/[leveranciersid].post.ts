@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
   const con = getMysqlConnection();
   const body = await readBody(event);
 
+  console.log(event.context.params)
+
   if (!event.context.params) {
     throw createError({
       statusCode: 500,
@@ -20,6 +22,7 @@ export default defineEventHandler(async (event) => {
     contact_naam: yup.string().required(),
     contact_email: yup.string().email().required(),
     telefoon_nr: yup.string().required(),
+    levering_datum: yup.date().required(),
   });
 
   const isValid = await userSchema.validate(body);
@@ -31,7 +34,11 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (parseInt(event.context.params.gezinId) !== body.id) {
+  // console.log("leverancier: " + event.context.params.leveranciersid)
+  // console.log("body: " + body.id)
+
+  if (parseInt(event.context.params.leveranciersid) !== body.id) {
+    console.error("Hi wiljan :)")
     throw createError({
       statusCode: 400,
       statusMessage: "Invalid data.",
@@ -39,18 +46,37 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const results = con
+    const results = await con
       .promise()
       .execute(
-        "UPDATE leverancier SET bedrijf_naam = ?, telefoon_nr = ?, adres = ?, postcode = ?, contact_email = ?, contact_naam WHERE id = ?",
+        `UPDATE leverancier SET
+          bedrijf_naam = ?,
+          telefoon_nr = ?,
+          adres = ?,
+          postcode = ?,
+          contact_email = ?,
+          contact_naam = ?
+        WHERE id = ?`,
         [
-          body.bedrjf_naam,
+          body.bedrijf_naam,
           body.telefoon_nr,
           body.adres,
           body.postcode,
           body.contact_email,
           body.contact_naam,
-          event.context.params.leveringId,
+          event.context.params.leveranciersid,
+        ]
+      );
+
+      await con
+      .promise()
+      .execute(
+        `UPDATE leveringen SET
+          datum = ?
+        WHERE leverancier_id = ?`,
+        [
+          body.levering_datum,
+          event.context.params.leveranciersid,
         ]
       );
 
