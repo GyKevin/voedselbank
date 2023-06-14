@@ -10,7 +10,10 @@ export default {
       naamRules: yup.string().required(),
       telefoonRules: yup.number().required(),
       adresRules: yup.string().required(),
-      postcodeRules: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
+      postcodeRules: yup
+        .string()
+        .required()
+        .matches(/^[\d]{4}( )?[A-Z]{2}$/, "Dit is geen geldige postcode"),
       emailRules: yup.string().email().required(),
       volwassenenRules: yup.number().required().integer().min(0),
       jongerenRules: yup.number().required().integer().min(0),
@@ -39,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <h4>Edit gezin</h4>
+  <h4>Gezin toevoegen</h4>
 
   <Form @submit="onSubmit">
     <div class="formContent">
