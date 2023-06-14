@@ -20,10 +20,10 @@ export default {
     };
   },
   mounted() {
-    const cookieStatus = document.cookie.includes('user_id');
-      if(cookieStatus) {
-        this.loggedIn = true;
-      }
+    const cookieStatus = document.cookie.includes("user_id");
+    if (cookieStatus) {
+      this.loggedIn = true;
+    }
   },
   // actions
   methods: {
@@ -34,7 +34,7 @@ export default {
       document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       this.loggedIn = false;
-    }
+    },
   },
 };
 </script>
@@ -70,11 +70,16 @@ export default {
             <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
             <NuxtLink to="/admin/leveranciers">Leverancieren overzicht</NuxtLink>
             <NuxtLink to="/admin/overzicht/GemaakteVoedselPakketten">Gemaakte voedsel- pakketten overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/VoedselPakketten">Voedsel pakketten overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">
-            <NuxtLink to="/login" class="login" v-if="loggedIn === false"> <font-awesome-icon :icon="['fass', 'circle-user']" /> Login </NuxtLink>
-            <NuxtLink to="/login" class="login" v-if="loggedIn === true" @click="logout"> <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> Logout </NuxtLink>
+            <NuxtLink to="/login" class="login" v-if="loggedIn === false">
+              <font-awesome-icon :icon="['fass', 'circle-user']" /> Login
+            </NuxtLink>
+            <NuxtLink to="/login" class="login" v-if="loggedIn === true" @click="logout">
+              <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> Logout
+            </NuxtLink>
           </div>
         </div>
       </div>

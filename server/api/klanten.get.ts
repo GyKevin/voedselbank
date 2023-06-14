@@ -1,10 +1,22 @@
 import { getMysqlConnection } from "~/server/mysql";
 
+interface TQueryResults {
+  results: Object[];
+  fields: any[];
+}
+
 export default defineEventHandler(async (event) => {
   const con = getMysqlConnection();
 
   try {
-    const [results, fields] = await con.promise().execute("SELECT id, naam, email, functie FROM gebruikers");
+    // @ts-ignore
+    const [results]: TQueryResults = await con.promise().query(
+      `
+      SELECT 
+        *
+      FROM klanten
+      `
+    );
 
     return results;
   } catch (error) {

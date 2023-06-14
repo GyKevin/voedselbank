@@ -10,7 +10,10 @@ export default defineEventHandler(async (event) => {
     naam: yup.string().required(),
     telefoon: yup.string().required(),
     adres: yup.string().required(),
-    postcode: yup.string().required().matches(/^[\d]{4}( )?[A-Z]{2}$/),
+    postcode: yup
+      .string()
+      .required()
+      .matches(/^[\d]{4}( )?[A-Z]{2}$/),
     email: yup.string().email().required(),
     volwassenen: yup.number().required().integer().min(0),
     jongeren: yup.number().required().integer().min(0),
@@ -27,7 +30,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const results = con
+    const results = await con
       .promise()
       .execute(
         "INSERT INTO klanten (naam, telefoon, adres, postcode, email, volwassenen, jongeren, baby) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
