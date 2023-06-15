@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     try {
         const [results, fields] = await con.promise().execute("INSERT INTO producten (ean, naam, categorie_id, aantal) VALUES (?, ?, ?, ?)", [body.ean, body.naam, body.categorie_id as Number, body.aantal]);
-        console.log(results);
         return {
             status: 200,
             body: results
@@ -15,7 +14,6 @@ export default defineEventHandler(async (event) => {
             status: 500,
             body: error
         };
-        console.log(error.errno);
         switch (error.errno) {
             case 1062:
                 result.status = 409;

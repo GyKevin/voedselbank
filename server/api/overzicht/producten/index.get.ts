@@ -4,10 +4,10 @@ export default defineEventHandler(async (event) => {
     const con = getMysqlConnection();
     
     try {
-        const [result, fields] = await con.promise().execute("SELECT ean, naam, categorie_id, aantal FROM producten");
-        return result;
-    } catch (e) {
-        return e;
-    }
+        const [results, fields] = await con.promise().execute("SELECT producten.*, categorie.naam AS categorie_naam FROM `producten` JOIN categorie ON categorie_id = categorie.id;");
     
+        return results;
+    } catch (error) {
+        return error;
+    }
 });

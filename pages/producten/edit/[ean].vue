@@ -51,7 +51,7 @@ export default {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const { data: product, pending: product_pending, error: product_error, refresh: product_refresh } = useFetch(`/api/producten/get/${params.ean}`, {
+    const { data: product, pending: product_pending, error: product_error, refresh: product_refresh } = useFetch(`/api/overzicht/producten/${params.ean}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -78,16 +78,16 @@ export default {
   },
   methods: {
     editProduct(product) {
-      useFetch(`/api/producten/edit/${product.ean}`, {
-        method: "POST",
+      useFetch(`/api/overzicht/producten/${product.ean}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(product),
       });
       this.$router.push("/producten");
     },
     deleteProduct(product) {
-      useFetch(`/api/producten/delete/${product.ean}`, {
-        method: "GET",
+      useFetch(`/api/overzicht/producten/${product.ean}`, {
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
       this.$router.push("/producten");

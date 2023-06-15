@@ -68,13 +68,15 @@ const searchTerm = ref('');
 export default {
   setup() {
     
-    const { data: producten, pending, error, refresh } = useFetch<Product[]>('/api/producten', {
-      method: 'POST',
+    const { data: producten, pending, error, refresh } = useFetch<Product[]>('/api/overzicht/producten', {
       headers: { 'Content-Type': 'application/json' },
-
       onRequest({ request, options }) {
-        // before request is sent out add search term to body
-        options.body = JSON.stringify({ searchTerm: searchTerm });
+        if (searchTerm.value) {
+          options.method = 'POST';
+          options.body = JSON.stringify({ searchTerm: searchTerm });
+        } else {
+          options.method = 'GET';
+        }
       }
     });
     // set producten interface type 

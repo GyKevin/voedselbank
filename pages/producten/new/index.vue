@@ -60,15 +60,15 @@ export default {
         addProduct() {
             if (this.check_ean_exists(this.product.ean)) return;
 
-            const { data, pending, error, refresh } = useFetch(`/api/producten/add`, {
-                method: "POST",
+            const { data, pending, error, refresh } = useFetch(`/api/overzicht/producten`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.product),
             });
             this.$router.push("/producten");
         },
         check_ean_exists(ean) {
-            const { data, pending, error, refresh } = useFetch(`/api/producten/get/${ean}`, {
+            const { data, pending, error, refresh } = useFetch(`/api/overzicht/producten/${ean}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
