@@ -14,6 +14,10 @@ button {
   transition: all 0.1s ease;
 }
 
+button.small {
+  padding: var(--size-2xs) var(--size-sm);
+}
+
 button svg {
   font-size: large;
 }
