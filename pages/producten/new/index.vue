@@ -61,7 +61,7 @@ export default {
             if (this.check_ean_exists(this.product.ean)) return;
 
             const { data, pending, error, refresh } = useFetch(`/api/overzicht/producten`, {
-                method: "PUT",
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.product),
             });

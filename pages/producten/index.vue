@@ -67,20 +67,16 @@ const searchTerm = ref('');
 
 export default {
   setup() {
-    
     const { data: producten, pending, error, refresh } = useFetch<Product[]>('/api/overzicht/producten', {
       headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
       onRequest({ request, options }) {
         if (searchTerm.value) {
-          options.method = 'POST';
-          options.body = JSON.stringify({ searchTerm: searchTerm });
-        } else {
-          options.method = 'GET';
-        }
+          // wanted to add abort controller here to prevent but its to fast to cancel the request on local setup 💀💀
+          options.query = { search: searchTerm.value };
+        } 
       }
     });
-    // set producten interface type 
-    ;
 
     return {
       producten,
