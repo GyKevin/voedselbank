@@ -1,2 +1,5 @@
-middleware gets executed on all page loads and api requests
+middleware gets executed on all page loads and api requests.
+
+```
+
 ```
