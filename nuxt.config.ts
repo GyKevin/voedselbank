@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ["@/styles/index.css", "@fortawesome/fontawesome-svg-core/styles.css"],
+  css: ["@/styles/index.css"],
   modules: ["@nuxtjs/device", "@nuxt/devtools"],
   devtools: {
     // Enable devtools (default: true)
