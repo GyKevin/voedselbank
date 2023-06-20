@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   if (!isValid) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid data.",
+      statusMessage: "ongeldig data.",
     });
   }
 
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
     console.error("Hi wiljan :)")
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid data.",
+      statusMessage: "ongeldig data.",
     });
   }
 

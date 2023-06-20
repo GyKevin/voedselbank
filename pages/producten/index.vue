@@ -5,7 +5,7 @@
     <!-- searchbar -->
     <div class="controls">
       <div class="search-box">
-        <input name="search" class="search" type="text" v-model="searchTerm" @input="search()" placeholder="Search Producten" />
+        <input name="search" class="search" type="text" v-model="searchTerm" @input="search()" placeholder="Zoek Producten" />
       </div>
       <div class="buttons">
         <Button

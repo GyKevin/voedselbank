@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
             }
             
             if (result.length > 0 || body.email === '') {
-                console.log("Invalid email address");
+                console.log("ongeldig email address");
             } else {
                 con.execute("INSERT INTO gebruikers (naam, email, password) VALUES (?, ?, ?)",
                 [body.username, body.email, body.password], (err, result) => {

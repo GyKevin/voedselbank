@@ -84,7 +84,7 @@ function getData(searchQuery, dateRange) {
   </div>
 
   <div class="search">
-    <input type="text" placeholder="Search" @input="onSearchChange" />
+    <input type="text" placeholder="Zoeken" @input="onSearchChange" />
     <Datepicker
       v-model="selectedDate"
       :range="true"

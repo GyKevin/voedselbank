@@ -95,6 +95,6 @@ export default {
       </div>
     </div>
 
-    <Button>Accept</Button>
+    <Button>Accepteren</Button>
   </Form>
 </template>

@@ -7,9 +7,9 @@
       <input type="password" placeholder="wachtwoord" v-model="pass"/>
       <input type="password" placeholder="bevestig wachtwoord" v-model="confpass"/>
       <button @click="register">aanmelden</button>
-      <p class="error_message" v-if="register_email_error === true">invalid email</p>
-      <p class="error_message" v-if="register_username_error === true">invalid username</p>
-      <p class="error_message" v-if="register_password_error === true">invalid password or passwords don't match</p>
+      <p class="error_message" v-if="register_email_error === true">ongeldig email</p>
+      <p class="error_message" v-if="register_username_error === true">ongeldig username</p>
+      <p class="error_message" v-if="register_password_error === true">ongeldig password or passwords don't match</p>
       <p class="message">Al geregistreerd? <a href="#" @click="toggleLogin">Login</a></p>
     </form>
     <form class="display-block" ref="login">

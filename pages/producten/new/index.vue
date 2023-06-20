@@ -26,7 +26,7 @@
         </div>
         <Button :icon="['fas', 'edit']" @click="addProduct()">Toevoegen</Button>
     
-        <Button :icon="['fas', 'xmark']" @click="$router.push('/producten')">Cancel</Button>
+        <Button :icon="['fas', 'xmark']" @click="$router.push('/producten')">Annuleer</Button>
     </div>
 </template>
 

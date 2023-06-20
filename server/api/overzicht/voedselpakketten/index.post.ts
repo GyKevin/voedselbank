@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   if (!isValid) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid data.",
+      statusMessage: "ongeldig data.",
     });
   }
 
