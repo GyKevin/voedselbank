@@ -1,0 +1,28 @@
+button {
+  display: flex !important;
+  gap: var(--size-xs) !important;
+  all: unset;
+  background-color: var(--color-primary);
+  padding: var(--size-sm) var(--size-xl);
+  border-radius: var(--border-radius);
+  color: white;
+  text-transform: uppercase;
+  width: fit-content;
+  align-self: flex-end;
+  cursor: pointer;
+  box-shadow: 0 3px hsl(146, 55%, 20%);
+  transition: all 0.1s ease;
+}
+
+button.small {
+  padding: var(--size-2xs) var(--size-sm);
+}
+
+button svg {
+  font-size: large;
+}
+
+button:active {
+  box-shadow: 0 1px hsl(146, 55%, 20%);
+  transform: translateY(2px);
+}

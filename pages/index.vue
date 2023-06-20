@@ -2,26 +2,38 @@
 
 <template>
   <div class="main">
-    <img src="~/assets/Logo.png" alt="">
-    <h2>{{ message }}</h2>
-    <span class="slogan">
-      Voor een gezonde toekomst: voeding, kansen en solidariteit
+    <div class="bannerBox">
+      <!-- <img class="banner" src="~/assets/HomepageBanner.jpg" alt=""> -->
+    </div>
+    <div class="welcomeMSG">
+      <img src="~/assets/Logo.png" alt="Logo" class="homepageLogo">
+    <h3 v-if="loggedIn === false">Welkom!</h3>
+    <h3 v-if="loggedIn === true">Welkom, {{ username }}!</h3>
+    <span class="slogan">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+       Dignissimos nisi sequi nulla delectus esse adipisci quidem modi tempore reprehenderit
+        sint itaque assumenda, atque aperiam laudantium quae ad eos repellendus natus.
     </span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  
   // state
   data() {
     return {
-      name: ["kevin", "anton", "thijn", "wiljan"],
-      message: ""
+      username: useCookie("username"),
+      loggedIn: false,
     };
   },
   mounted() {
-    const  randomIndex = Math.floor(Math.random() * this.name.length);
-    this.message = `Welkom, ${this.name[randomIndex]}!`;
+    const username = useCookie("username");
+    console.log(username.value);
+    const cookieStatus = document.cookie.includes('user_id');
+      if(cookieStatus) {
+        this.loggedIn = true;
+      }
   },
   // actions
   methods: {
