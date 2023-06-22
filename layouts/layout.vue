@@ -73,10 +73,10 @@ export default {
           </div>
 
           <div class="bottomMenu">
-            <NuxtLink to="/login" class="login" v-if="loggedIn === false">
+            <NuxtLink to="/auth" class="login" v-if="loggedIn === false">
               <font-awesome-icon :icon="['fass', 'circle-user']" /> Login
             </NuxtLink>
-            <NuxtLink to="/login" class="login" v-if="loggedIn === true" @click="logout">
+            <NuxtLink to="/auth" class="login" v-if="loggedIn === true" @click="logout">
               <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> Logout
             </NuxtLink>
           </div>

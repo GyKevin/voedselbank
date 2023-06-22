@@ -3,12 +3,52 @@
     <div class="form">
       <!-- ==================================================== Registration ==================================================== -->
       <form autocomplete="on" v-if="!logInActive">
-        <input type="text" placeholder="gebruikersnaam" v-model="username" autocomplete="username" />
-        <input type="email" placeholder="email" v-model="email" autocomplete="email" />
-        <input type="password" placeholder="wachtwoord" v-model="password" autocomplete="current-password" />
-        <input type="password" placeholder="bevestig wachtwoord" v-model="conf_password" autocomplete="current-password" />
+        <input
+          type="text"
+          placeholder="gebruikersnaam"
+          v-model="username"
+          autocomplete="username"
+          :class="{
+            error: username.length < 3 && username != '',
+          }"
+        />
+        <input
+          type="email"
+          placeholder="email"
+          v-model="email"
+          autocomplete="email"
+          :class="{
+            error: email != '' && validateEmail(email),
+          }"
+        />
+        <input
+          type="password"
+          placeholder="wachtwoord"
+          v-model="password"
+          autocomplete="current-password"
+          :class="{
+            error: password.length < 4 && password != '',
+          }"
+        />
+        <input
+          type="password"
+          placeholder="bevestig wachtwoord"
+          v-model="conf_password"
+          autocomplete="current-password"
+          :class="{
+            error: validatePasswords(password, conf_password) && conf_password != '',
+          }"
+        />
 
         <button
+          :disabled="
+            username.length < 3 ||
+            email == '' ||
+            password.length < 4 ||
+            conf_password == '' ||
+            validateEmail(email) ||
+            validatePasswords(password, conf_password)
+          "
           @click="
             (e) => {
               e.preventDefault();
@@ -18,11 +58,7 @@
         >
           aanmelden
         </button>
-        <!-- 
-        <p class="error_message" v-if="register_email_error === true">invalid email</p>
-        <p class="error_message" v-if="register_username_error === true">invalid username</p>
-        <p class="error_message" v-if="register_password_error === true">invalid password or passwords don't match</p> -->
-
+        <p style="color: red" v-if="email_error">Email al in gebruik</p>
         <p class="message">Al geregistreerd? <a href="#" @click="toggleForm">Login</a></p>
       </form>
 
@@ -49,16 +85,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   setup() {
     const logInActive = ref(true);
-
     // login
     const username = ref("");
     const email = ref("");
     const password = ref("");
     const conf_password = ref("");
+
+    const email_error = ref(false);
 
     const {
       data: oauth_status,
@@ -79,6 +116,8 @@ export default {
           });
         } else {
           if (conf_password.value != password.value) return;
+          if (username.value.length < 3) return;
+          if (password.value.length < 4) return;
 
           options.method = "PUT";
           options.body = JSON.stringify({
@@ -89,21 +128,26 @@ export default {
         }
       },
       onResponse({ response, options }) {
-        if (response.status == 200) {
-          useCookie("Authorization", {
-            value: response.headers.get("Authorization"),
-            options: {
+        switch (response.status) {
+          case 200:
+            const auth = useCookie("Authorization", {
               path: "/",
               maxAge: 60 * 60 * 24 * 7,
-            },
-          });
-          useCookie("Authorization-key", {
-            value: response.headers.get("Authorization-key"),
-            options: {
+            });
+            const auth_key = useCookie("Authorization-key", {
               path: "/",
               maxAge: 60 * 60 * 24 * 7,
-            },
-          });
+            });
+            auth.value = response.headers.get("Authorization");
+            auth_key.value = response.headers.get("Authorization-key");
+            navigateTo("/");
+            break;
+          case 401:
+            break;
+          case 409:
+            email_error.value = true;
+            console.log("email already in use", response.status, email_error.value);
+            break;
         }
       },
     });
@@ -114,6 +158,7 @@ export default {
       email,
       password,
       conf_password,
+      email_error,
       oauth_status,
       oauth_refresh,
     };
@@ -122,43 +167,12 @@ export default {
     toggleForm() {
       this.logInActive = !this.logInActive;
     },
-    register(e) {
-      e.preventDefault();
-      if (!this.validate()) return;
-
-      const { data, pending, error, refresh } = useFetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.username,
-          email: this.regemail,
-          password: this.pass,
-          confirmpassword: this.confpass,
-        }),
-      });
-      // console.log(data, pending, error)
+    validateEmail(email: string) {
+      const re = /\S+@\S+\.\S+/;
+      return !re.test(email);
     },
-    validate() {
-      // check for errors
-      if (!this.regemail.includes("@", ".")) {
-        this.register_email_error = true;
-      }
-      if (!this.username.includes("")) {
-        this.register_username_error = true;
-      }
-      if (!this.pass.includes("") || this.pass != this.confpass) {
-        this.register_password_error = true;
-      }
-      // if no errors, register
-      if (
-        this.register_email_error === false &&
-        this.register_username_error === false &&
-        this.register_password_error === false
-      ) {
-        return true;
-      }
+    validatePasswords(password: string, conf_password: string) {
+      return password.length < 4 || password != conf_password;
     },
   },
 };
@@ -167,16 +181,8 @@ export default {
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-.error_message {
+.error {
   color: red;
-}
-
-.display-none {
-  display: none;
-}
-
-.display-block {
-  display: block;
 }
 
 .login-page {
@@ -223,6 +229,11 @@ export default {
   cursor: pointer;
 }
 
+.form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .form button:hover,
 .form button:active,
 .form button:focus {
@@ -230,7 +241,7 @@ export default {
 }
 
 .form .message {
-  margin: 15px 0 0;
+  margin-top: 15px;
   color: #b3b3b3;
   font-size: 12px;
 }

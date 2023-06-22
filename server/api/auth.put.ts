@@ -5,24 +5,26 @@ export default defineEventHandler(async (event) => {
     const con = getMysqlConnection();
     // Get the body and query from the event
     const body = await readBody(event)
-    console.log(body)
 
 
 
     // check if email already exists
     const [result_email_check] = await con.promise().execute("SELECT * FROM gebruikers WHERE email = ?", [body.email])
     if (result_email_check.length > 0) {
+        setResponseStatus(event, 409);
         return {
-            status: 409,
             message: "Email already exists"
         }
     }
 
     // insert into database
-    const [result] = await con.promise().execute("INSERT INTO gebruikers (username, email, password) VALUES (?, ?, ?)", [body.username, body.email, body.password])
+    const [result] = await con.promise().execute("INSERT INTO gebruikers (naam, email, password) VALUES (?, ?, ?)", [body.username, body.email, body.password])
     if (result.affectedRows > 0) {
+
+        // set auth header
+        setResponseHeader(event, "authorization", body.email);
+        setResponseHeader(event, "authorization-key", body.password);
         return {
-            status: 200,
             message: "Registered"
         };
     }

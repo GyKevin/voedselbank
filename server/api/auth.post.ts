@@ -11,17 +11,19 @@ export default defineEventHandler(async (event) => {
     if (result.length > 0) {
         
         // set auth header
-        setResponseHeader(event, "authorization", result[0].email);
-        setResponseHeader(event, "authorization-key", result[0].password);
+        setResponseHeaders(event, {
+            "authorization": result[0].email,
+            "authorization-key": result[0].password
+        });
 
         return {
-            status: 200,
             message: "Logged in"
         };
     }
     else {
+        // set response status
+        setResponseStatus(event, 401);
         return {
-            status: 401,
             message: "Unauthorized"
         }
     }

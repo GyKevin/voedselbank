@@ -5,7 +5,7 @@
     <div class="bannerBox">
       <!-- <img class="banner" src="~/assets/HomepageBanner.jpg" alt=""> -->
     </div>
-    <div class="welcomeMSG">
+    <div class="welcomeMSG" v-permission:selected="2">
       <img src="~/assets/Logo.png" alt="Logo" class="homepageLogo">
     <h3 v-if="loggedIn === false">Welkom!</h3>
     <h3 v-if="loggedIn === true">Welkom, {{ username }}!</h3>
@@ -29,7 +29,6 @@ export default {
   },
   mounted() {
     const username = useCookie("username");
-    console.log(username.value);
     const cookieStatus = document.cookie.includes('user_id');
       if(cookieStatus) {
         this.loggedIn = true;
