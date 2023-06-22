@@ -11,6 +11,9 @@ import * as yup from "yup";
 =====================================================================
 */
 
+const klantenSearchTerm = ref("");
+const productenSearchTerm = ref("");
+
 export default {
   data() {
     return {
@@ -25,6 +28,10 @@ export default {
     ErrorMessage,
   },
   methods: {
+    search() {
+      if (this.pending) return; // don't search if there is a pending request
+      this.refresh();
+    },
     onSubmit(values) {
       const newValues = {
         ...values,
@@ -73,21 +80,36 @@ export default {
     },
   },
   setup() {
-    const { data: klanten } = useFetch("/api/klanten", {
+    const { data: klanten, refresh: klantenRefresh } = useFetch("/api/klanten", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      onRequest({ request, options }) {
+        if (klantenSearchTerm.value) {
+          options.query = { search: klantenSearchTerm.value };
+        }
+      },
     });
 
-    const { data: producten } = useFetch("/api/producten", {
+    const { data: producten, refresh: productenRefresh } = useFetch("/api/producten", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      onRequest({ request, options }) {
+        if (productenSearchTerm.value) {
+          options.query = { search: productenSearchTerm.value };
+        }
+      },
     });
 
-    return { klanten, producten };
+    const refresh = () => {
+      klantenRefresh();
+      productenRefresh();
+    };
+
+    return { klanten, producten, refresh, klantenSearchTerm, productenSearchTerm };
   },
 };
 </script>
@@ -99,9 +121,17 @@ export default {
     <div class="formContent">
       <div>
         <label for="klant">Klant</label>
-        <Field name="klant" as="select" :rules="klantRules">
-          <option v-for="klant in klanten" :value="klant.id">{{ klant.naam }}</option>
-        </Field>
+        <Field
+          name="klant"
+          type="text"
+          v-model="klantenSearchTerm"
+          :value="klantenSearchTerm"
+          @input="search()"
+          :rules="klantRules"
+        />
+        <div class="searchResultBox">
+          <div v-for="klant in klanten.slice(0, 5)">{{ klant.naam }}</div>
+        </div>
         <ErrorMessage name="klant" />
       </div>
 

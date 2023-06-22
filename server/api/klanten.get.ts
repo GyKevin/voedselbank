@@ -7,15 +7,19 @@ interface TQueryResults {
 
 export default defineEventHandler(async (event) => {
   const con = getMysqlConnection();
+  const query = getQuery(event);
 
   try {
     // @ts-ignore
-    const [results]: TQueryResults = await con.promise().query(
+    const [results]: TQueryResults = await con.promise().execute(
       `
       SELECT 
         *
       FROM klanten
-      `
+      WHERE naam LIKE CONCAT('%', ?, '%')
+      `,
+      // @ts-ignore
+      [query?.search?.toLowerCase() ?? ""]
     );
 
     return results;
