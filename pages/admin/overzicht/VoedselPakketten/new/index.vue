@@ -11,11 +11,15 @@ import * as yup from "yup";
 =====================================================================
 */
 
+const klantenSearchTerm = ref("");
+const productenSearchTerm = ref("");
+
 export default {
   data() {
     return {
       klantRules: yup.string().required(),
       aanmaakDatumRules: yup.date().required(),
+      selectedKlant: null,
       selectedProducten: new Set(),
     };
   },
@@ -25,9 +29,16 @@ export default {
     ErrorMessage,
   },
   methods: {
+    search() {
+      if (this.pending) return; // don't search if there is a pending request
+      this.refresh();
+    },
     onSubmit(values) {
+      if (!this.selectedKlant.id) return;
+
       const newValues = {
         ...values,
+        klant: this.selectedKlant.id,
         producten: [...this.selectedProducten],
       };
 
@@ -52,7 +63,7 @@ export default {
       });
     },
     selection(e) {
-      const el = e.target.value;
+      const el = e.target.id;
       const index = this.producten.findIndex((i) => i.ean === el);
 
       if ([...this.selectedProducten].some((obj) => obj.ean === el)) return; // return if ean exists
@@ -71,23 +82,78 @@ export default {
         }
       });
     },
+    onInputSearchResultToKlantenInput(e) {
+      /*
+        this runs on every input from Klant field.
+        it will check if the input text exists in the klanten array.
+        if true:
+            add it to the selectedKlant object
+        if false:
+            empty selectedKlant object
+
+        this is incase the user doesnt use the searchBox results
+      */
+      this.search();
+      const index = this.klanten.findIndex((i) => i.naam === e.target.value);
+
+      if (index !== -1) {
+        this.selectedKlant = {
+          id: this.klanten[index].id,
+          naam: this.klanten[index].naam,
+        };
+      } else {
+        this.selectedKlant = {
+          id: null,
+          naam: null,
+        };
+      }
+    },
+    addSearchResultToKlantenInput(e) {
+      /*
+        this runs when user selects option from search result box on Klant field
+        it will add the id and naam to selectedKlant object
+      */
+      this.klantenSearchTerm = e.target.dataset.naam; // add naam to klantenSearchTerm
+      this.selectedKlant = {
+        id: e.target.id,
+        naam: e.target.dataset.naam,
+      };
+    },
+    addSearchResultToProductenInput(e) {
+      this.selection(e);
+    },
   },
   setup() {
-    const { data: klanten } = useFetch("/api/klanten", {
+    const { data: klanten, refresh: klantenRefresh } = useFetch("/api/klanten", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      onRequest({ request, options }) {
+        if (klantenSearchTerm.value) {
+          options.query = { search: klantenSearchTerm.value };
+        }
+      },
     });
 
-    const { data: producten } = useFetch("/api/producten", {
+    const { data: producten, refresh: productenRefresh } = useFetch("/api/producten", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      onRequest({ request, options }) {
+        if (productenSearchTerm.value) {
+          options.query = { search: productenSearchTerm.value };
+        }
+      },
     });
 
-    return { klanten, producten };
+    const refresh = () => {
+      klantenRefresh();
+      productenRefresh();
+    };
+
+    return { klanten, producten, refresh, klantenSearchTerm, productenSearchTerm };
   },
 };
 </script>
@@ -95,13 +161,28 @@ export default {
 <template>
   <h4>Nieuwe voedsel pakket maken</h4>
 
-  <Form @submit="onSubmit">
+  <Form @submit="onSubmit" autocomplete="off">
     <div class="formContent">
       <div>
         <label for="klant">Klant</label>
-        <Field name="klant" as="select" :rules="klantRules">
-          <option v-for="klant in klanten" :value="klant.id">{{ klant.naam }}</option>
-        </Field>
+        <Field
+          name="klant"
+          type="text"
+          v-model="klantenSearchTerm"
+          :value="klantenSearchTerm"
+          @input="onInputSearchResultToKlantenInput"
+          :rules="klantRules"
+        />
+        <div class="searchResultBox">
+          <div
+            v-for="klant in klanten.slice(0, 5)"
+            :id="klant.id"
+            :data-naam="klant.naam"
+            @mousedown.prevent="addSearchResultToKlantenInput"
+          >
+            {{ klant.naam }}
+          </div>
+        </div>
         <ErrorMessage name="klant" />
       </div>
 
@@ -113,11 +194,22 @@ export default {
 
       <div>
         <label for="producten">Selecteer producten</label>
-        <Field name="producten" as="select" :value="selectedProducten" @change="selection">
-          <option v-for="product in producten" :key="product.ean" :value="product.ean" :disabled="product.aantal <= 0">
+        <Field
+          name="producten"
+          type="text"
+          v-model="productenSearchTerm"
+          :value="productenSearchTerm"
+          @input="search()"
+        />
+        <div class="searchResultBox">
+          <div
+            v-for="product in producten.slice(0, 5)"
+            :id="product.ean"
+            @mousedown.prevent="addSearchResultToProductenInput"
+          >
             {{ product.naam }}
-          </option>
-        </Field>
+          </div>
+        </div>
         <ErrorMessage name="producten" />
       </div>
 
@@ -157,7 +249,7 @@ export default {
                   <!-- type="button" is needed to avoid onSubmit from running without e.preventDefault() -->
                 </td>
               </tr>
-              <tr v-if="!selectedProducten[0]">
+              <tr v-if="!selectedProducten.keys().next().value">
                 <td class="min">Geen product geselecteerd</td>
               </tr>
             </tbody>

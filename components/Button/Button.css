@@ -15,7 +15,8 @@ button {
 }
 
 button.small {
-  padding: var(--size-2xs) var(--size-sm);
+  padding: var(--size-xs) var(--size-sm);
+  font-size: smaller;
 }
 
 button svg {
