@@ -113,7 +113,7 @@ export default {
         this runs when user selects option from search result box on Klant field
         it will add the id and naam to selectedKlant object
       */
-      this.klantenSearchTerm = e.target.dataset.naam;
+      this.klantenSearchTerm = e.target.dataset.naam; // add naam to klantenSearchTerm
       this.selectedKlant = {
         id: e.target.id,
         naam: e.target.dataset.naam,
