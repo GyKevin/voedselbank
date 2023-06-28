@@ -2,7 +2,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     console.info('Test plugin load');
 
     vueApp.directive('permission', {
-        mounted(el, binding, vnode, oldVnode) {
+        created(el, binding, vnode, oldVnode) {
             Auth(el, binding, vnode, oldVnode);
         },
         updated(el, binding, vnode, oldVnode) {
@@ -11,7 +11,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     });
 });
 
-var Auth = (el, binding, vnode, oldVnode) => {
+var Auth = (el: any, binding: any, vnode: any, oldVnode: any) => {
     const { value } = binding;
     const role = useCookie('Authorization-role').value;
 

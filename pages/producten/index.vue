@@ -7,7 +7,8 @@
       <div class="search-box">
         <input name="search" class="search" type="text" v-model="searchTerm" @input="search()" placeholder="Search Producten" />
       </div>
-      <div class="buttons">
+      <!-- magezijnmedewerker -->
+      <div class="buttons" v-permission="[0,1]">
         <Button
           @click="() => navigateTo('/producten/new', { replace: true })"
           class="btn"
@@ -25,7 +26,7 @@
           <th>Naam</th>
           <th>Categorie ID</th>
           <th>Aantal</th>
-          <th v-if="allowed">
+          <th v-permission="[0,1]">
             Acties
           </th>
         </tr>
@@ -36,7 +37,7 @@
           <td>{{ product.naam }}</td>
           <td>{{ product.categorie_naam }}</td>
           <td>{{ product.aantal }}</td>
-          <td v-if="allowed">
+          <td v-permission="[0,1]">
             <Button
               @click="() => navigateTo(`/producten/edit/${product.ean}`, { replace: true  })"
               class="btn-x-small"
@@ -84,11 +85,6 @@ export default {
       error,
       refresh,
       searchTerm,
-    }
-  },
-  data() {
-    return {
-      allowed: true, // tmp auth shit
     }
   },
   methods: {
