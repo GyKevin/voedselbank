@@ -138,8 +138,15 @@ export default {
               path: "/",
               maxAge: 60 * 60 * 24 * 7,
             });
+            const auth_role = useCookie("Authorization-role", {
+              path: "/",
+              maxAge: 60 * 60 * 24 * 7,
+            });
+            
             auth.value = response.headers.get("Authorization");
             auth_key.value = response.headers.get("Authorization-key");
+            auth_role.value = response.headers.get("Authorization-role");
+
             navigateTo("/");
             break;
           case 401:
