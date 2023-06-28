@@ -2,23 +2,44 @@ export default defineNuxtPlugin(({ vueApp }) => {
     console.info('Test plugin load');
 
     vueApp.directive('permission', {
-        beforeMount(el, binding, vNode) {
-            console.info('Test wanting to mount', el, binding, vNode);
+        mounted(el, binding, vnode, oldVnode) {
+            Auth(el, binding, vnode, oldVnode);
         },
-        created(el, binding, vNode) {
-            const allowed_perms = [0, 3]
-            const user_perm = binding.value
-            if (!allowed_perms.includes(user_perm)) {
-                el.hidden = true
-            }
+        updated(el, binding, vnode, oldVnode) {
+            Auth(el, binding, vnode, oldVnode);
         },
-        updated(el, binding, vNode) {
-            const allowed_perms = [0, 3]
-            const user_perm = binding.value
-            if (!allowed_perms.includes(user_perm)) {
-                el.hidden = true
-            } else
-                el.hidden = false
-        }
     });
 });
+
+var Auth = (el, binding, vnode, oldVnode) => {
+    const { value } = binding;
+    const role = useCookie('Authorization-role').value;
+
+    if (value && value instanceof Array && value.length > 0) {
+        const permissionRoles = value;
+
+        const hasPermission = permissionRoles.includes(role);
+
+        if (!hasPermission) {
+            const replacement = document.createElement('div');
+            replacement.setAttribute('id', vnode.scopeId);
+            replacement.hidden = true;
+
+            el.parentNode && el.parentNode.replaceChild(replacement, el);
+        } else {
+            if (!el.parentNode && vnode.ctx.$_permissionParentNode) {
+                console.log(vnode.ctx.$_permissionParentNode, el)
+
+                const slot = vnode.ctx.$_permissionParentNode.querySelector(`#${vnode.scopeId}`);
+                if (slot) {
+                    vnode.ctx.$_permissionParentNode.replaceChild(el, slot);
+                } else {
+                    vnode.ctx.$_permissionParentNode.appendChild(el);
+                    console.log('append to end of parent node')
+                }
+            } else vnode.ctx.$_permissionParentNode = el.parentNode;
+        }
+    } else {
+        throw new Error(`Need roles! Like v-permission="[0,1,2]"`);
+    }
+}
