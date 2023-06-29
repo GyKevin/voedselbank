@@ -50,6 +50,7 @@ export default {
 <template>
   <div class="container">
     <div
+    v-if="useRoute().path !== '/auth'"
       :class="{
         sidebar: true,
         sidebarClosed: !menuOpen,
