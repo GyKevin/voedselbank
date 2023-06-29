@@ -1,15 +1,24 @@
 <style src="./index.css" scoped />
 
 <script>
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+
 export default {
   data() {
     return {
+      uitgifteRules: yup.date().required(),
       dateFormatOptions: {
         month: "short",
         day: "numeric",
         year: "numeric",
       },
     };
+  },
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
   },
   setup() {
     definePageMeta({
@@ -30,6 +39,26 @@ export default {
     });
 
     return { voedselpakket, pending, error, refresh };
+  },
+  methods: {
+    onSubmit(values) {
+      const newValues = {
+        ...values,
+        id: this.voedselpakket.voedselpakket_id,
+        datum_aanmaaken: this.voedselpakket.datum_aanmaaken,
+      };
+
+      useFetch(`/api/overzicht/voedselpakketten/${this.voedselpakket.voedselpakket_id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newValues),
+      }).then((data) => {
+        this.refresh();
+        navigateTo("/admin/overzicht/VoedselPakketten", { replace: true });
+      });
+    },
   },
 };
 </script>
@@ -53,12 +82,17 @@ export default {
         </tr>
         <tr>
           <td>Datum uitgifte</td>
-          <td>
-            {{
-              voedselpakket.datum_uitgifte
-                ? new Date(voedselpakket.datum_uitgifte).toLocaleDateString("en-NL", dateFormatOptions)
-                : "-"
-            }}
+          <td v-if="voedselpakket.datum_uitgifte">
+            {{ new Date(voedselpakket.datum_uitgifte).toLocaleDateString("en-NL", dateFormatOptions) }}
+          </td>
+          <td v-else>
+            <Form class="flex-hor" @submit="onSubmit" autocomplete="off">
+              <div>
+                <Field type="date" name="datum_uitgifte" :rules="uitgifteRules" />
+                <ErrorMessage name="datum_uitgifte" />
+              </div>
+              <Button size="small">Submit</Button>
+            </Form>
           </td>
         </tr>
         <tr>

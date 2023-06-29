@@ -7,17 +7,21 @@ interface TQueryResults {
 
 export default defineEventHandler(async (event) => {
   const con = getMysqlConnection();
+  const query = getQuery(event);
 
   try {
     // @ts-ignore
-    const [results]: TQueryResults = await con.promise().query(
+    const [results]: TQueryResults = await con.promise().execute(
       `
       SELECT 
         p.*,
         c.naam AS categorie_naam
       FROM producten p
       LEFT JOIN categorie c ON c.id = p.categorie_id
-      `
+      WHERE p.naam LIKE CONCAT('%', ?, '%')
+      `,
+      // @ts-ignore
+      [query?.search?.toLowerCase() ?? ""]
     );
 
     return results;
