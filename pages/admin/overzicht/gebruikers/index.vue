@@ -1,6 +1,9 @@
 <style src="./index.css" scoped />
 
 <script setup>
+definePageMeta({
+  middleware: ["auth-0"],
+});
 const {
   data: users,
   pending,
@@ -11,10 +14,6 @@ const {
     "Content-Type": "application/json",
   },
 });
-</script>
-
-<script>
-export default {};
 </script>
 
 <template>

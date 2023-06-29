@@ -1,6 +1,9 @@
 <style src="./index.css" scoped />
 
 <script setup>
+definePageMeta({
+  middleware: ["auth-0"],
+});
 const {
   data: users,
   pending,
@@ -13,9 +16,6 @@ const {
 });
 </script>
 
-<script>
-export default {};
-</script>
 
 <template>
   <div class="header">

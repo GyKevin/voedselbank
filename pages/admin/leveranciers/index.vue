@@ -8,6 +8,10 @@ import { faArrowRight, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faArrowRight, faSquarePlus);
 
+definePageMeta({
+  middleware: ["auth-1"],
+});
+
 const {
   data: leveranciers,
   pending,
@@ -23,7 +27,7 @@ const {
 <template>
   <div class="header">
     <h4>Leveranciers overzicht</h4>
-    <Button  @click="() => navigateTo('/admin/leveranciers/new', { replace: true })" :icon="['fas', 'square-plus']"> Toevoegen </Button>
+    <Button v-if="perm == 0"  @click="() => navigateTo('/admin/leveranciers/new', { replace: true })" :icon="['fas', 'square-plus']"> Toevoegen </Button>
   </div>
 
   <p v-if="error">{{ error }}</p>
@@ -72,6 +76,7 @@ const {
 export default {
   data() {
     return {
+      perm: useCookie("Authorization-role"),
       dateFormatOptions: {
         month: "short",
         day: "numeric",

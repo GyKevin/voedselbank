@@ -12,6 +12,9 @@ export default {
     };
   },
   setup() {
+    definePageMeta({
+      middleware: ["auth-2"],
+    });
     const route = useRoute();
 
     const {

@@ -1,5 +1,11 @@
 <template>
   <div class="login-page">
+    <div class="succes-popup hidden">
+      <div class="succes-popup-content">
+        <p>U bent succesvol geregistreerd!</p>
+        <p>U kunt nu inloggen, wij redirecten u nu</p>
+      </div>
+    </div>
     <div class="form">
       <!-- ==================================================== Registration ==================================================== -->
       <form autocomplete="on" v-if="!logInActive">
@@ -39,6 +45,10 @@
             error: validatePasswords(password, conf_password) && conf_password != '',
           }"
         />
+        <select name="functie" class="custom-select" v-model="functie">
+          <option value="1">Magazijnmedewerker</option>
+          <option value="2">Vrijwilliger</option>
+        </select>
 
         <button
           :disabled="
@@ -94,6 +104,7 @@ export default {
     const email = ref("");
     const password = ref("");
     const conf_password = ref("");
+    const functie = ref(1);
 
     const email_error = ref(false);
 
@@ -124,10 +135,12 @@ export default {
             username: username.value,
             email: email.value,
             password: password.value,
+            functie: functie.value,
           });
         }
       },
       onResponse({ response, options }) {
+        console.log(response.status);
         switch (response.status) {
           case 200:
             const auth = useCookie("Authorization", {
@@ -142,12 +155,25 @@ export default {
               path: "/",
               maxAge: 60 * 60 * 24 * 7,
             });
-            
+            const auth_name = useCookie("Authorization-name", {
+              path: "/",
+              maxAge: 60 * 60 * 24 * 7,
+            });
             auth.value = response.headers.get("Authorization");
             auth_key.value = response.headers.get("Authorization-key");
             auth_role.value = response.headers.get("Authorization-role");
+            auth_name.value = response.headers.get("Authorization-name");
 
-            navigateTo("/");
+            navigateTo("/", { replace: true });
+            break;
+          case 201:
+            const popup = document.querySelector(".succes-popup");
+            popup?.classList.remove("hidden");
+            setTimeout(() => {
+              popup?.classList.add("hidden");
+              window.location.reload();
+            }, 1000);
+            
             break;
           case 401:
             break;
@@ -165,6 +191,7 @@ export default {
       email,
       password,
       conf_password,
+      functie,
       email_error,
       oauth_status,
       oauth_refresh,
@@ -187,6 +214,36 @@ export default {
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.succes-popup {
+  position: absolute;
+  z-index: 100;
+
+  /* center top */
+  top: 5%;
+  left: 50%;
+
+  /* size */
+  width: 300px;
+  height: 100px;
+
+  /* style */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* animation */
+  transition: all 0.3s ease-in-out;
+
+}
+
+.hidden {
+  display: none;
+  z-index: -100;
+}
 
 .error {
   color: red;
@@ -220,6 +277,19 @@ export default {
   box-sizing: border-box;
   font-size: 14px;
 }
+
+.form select {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
 
 .form button {
   font-family: "Roboto", sans-serif;

@@ -33,6 +33,9 @@
 <script>
 export default {
     setup() {
+        definePageMeta({
+        middleware: ["auth-1"],
+        });
         const { data: categorien, pending, error, refresh } = useFetch(`/api/categorieen/get`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },

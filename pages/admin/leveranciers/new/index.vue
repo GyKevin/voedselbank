@@ -1,4 +1,9 @@
 <style src="./index.css" scoped />
+<script setup>
+definePageMeta({
+  middleware: ["auth-0"],
+});
+</script>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";

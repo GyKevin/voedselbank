@@ -9,10 +9,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^0.1.6",
+    "@nuxt/devtools": "^0.6.4",
     "@nuxtjs/device": "^3.1.0",
     "@types/node": "^18",
-    "nuxt": "^3.4.3"
+    "nuxt": "^3.6.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",

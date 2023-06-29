@@ -1,5 +1,3 @@
-import { getMysqlConnection } from "~/server/mysql";
-
 export default defineNuxtRouteMiddleware(async (to, from) => {
     // if request is an api request, skip this middleware
     if  (to.path?.startsWith("/api")) return;

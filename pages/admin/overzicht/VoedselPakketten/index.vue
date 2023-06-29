@@ -18,6 +18,9 @@ export default {
     Datepicker: VueDatepickerUi,
   },
   setup() {
+    definePageMeta({
+      middleware: ["auth-2"],
+    });
     // this code is such a pain in the ass
     // even GPT-4 needed to help me 5 times
     const search = ref("");

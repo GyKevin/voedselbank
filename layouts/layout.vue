@@ -2,8 +2,6 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-
 </script>
 
 <script>
@@ -19,6 +17,7 @@ export default {
     return {
       menuOpen: this.$device.isDesktop,
       loggedIn: false,
+      perm: useCookie("Authorization-role")
     };
   },
   mounted() {
@@ -33,9 +32,16 @@ export default {
       this.menuOpen = !this.menuOpen;
     },
     logout() {
-      document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      this.loggedIn = false;
+      const auth = useCookie("Authorization");
+      const auth_key = useCookie("Authorization-key");
+      const auth_role = useCookie("Authorization-role");
+
+      // nuxt will set maxAge to -1 if value is null
+      auth.value = null;
+      auth_key.value = null;
+      auth_role.value = null;
+
+      navigateTo("/auth", { replace: true });
     },
   },
 };
@@ -68,17 +74,17 @@ export default {
           <div class="menu">
             <NuxtLink to="/">Home</NuxtLink>
             <NuxtLink to="/producten">Producten overzicht</NuxtLink>
-            <NuxtLink to="/admin/overzicht/gebruikers">Gebruikers overzicht</NuxtLink>
-            <NuxtLink to="/admin/overzicht/gezinnen">Gezinnen overzicht</NuxtLink>
-            <NuxtLink to="/admin/leveranciers">Leverancieren overzicht</NuxtLink>
-            <NuxtLink to="/admin/overzicht/VoedselPakketten">Voedsel pakketten overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gebruikers" v-if="perm == '0'">Gebruikers overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/gezinnen" v-if="perm == '0'">Gezinnen overzicht</NuxtLink>
+            <NuxtLink to="/admin/leveranciers" v-if="perm == '0' || perm == '1'">Leverancieren overzicht</NuxtLink>
+            <NuxtLink to="/admin/overzicht/VoedselPakketten"  v-if="perm == '0' || perm == '2'">Voedsel pakketten overzicht</NuxtLink>
           </div>
 
           <div class="bottomMenu">
-            <NuxtLink to="/auth" class="login" v-if="loggedIn === false">
+            <!-- <NuxtLink to="/auth" class="login" v-if="loggedIn === false">
               <font-awesome-icon :icon="['fass', 'circle-user']" /> Login
-            </NuxtLink>
-            <NuxtLink to="/auth" class="login" v-if="loggedIn === true" @click="logout">
+            </NuxtLink> -->
+            <NuxtLink to="/auth" class="login" @click="logout">
               <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> Logout
             </NuxtLink>
           </div>

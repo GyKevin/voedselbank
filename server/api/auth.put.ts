@@ -18,12 +18,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // insert into database
-    const [result] = await con.promise().execute("INSERT INTO gebruikers (naam, email, password) VALUES (?, ?, ?)", [body.username, body.email, body.password])
+    const [result] = await con.promise().execute("INSERT INTO gebruikers (naam, email, password, functie) VALUES (?, ?, ?, ?)", [body.username, body.email, body.password, body.functie])
     if (result.affectedRows > 0) {
-
-        // set auth header
-        setResponseHeader(event, "authorization", body.email);
-        setResponseHeader(event, "authorization-key", body.password);
+        setResponseStatus(event, 201);
         return {
             message: "Registered"
         };

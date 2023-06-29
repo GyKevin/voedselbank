@@ -41,6 +41,9 @@
 <script>
 export default {
   setup() {
+    definePageMeta({
+      middleware: ["auth-1"],
+    });
     const params = useRoute().params;
     const {
       data: categorien,

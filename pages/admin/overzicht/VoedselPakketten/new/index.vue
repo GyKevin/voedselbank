@@ -1,5 +1,4 @@
 <style src="./index.css" scoped />
-
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
@@ -73,6 +72,9 @@ export default {
     },
   },
   setup() {
+    definePageMeta({
+      middleware: ["auth-2"],
+    });
     const { data: klanten } = useFetch("/api/klanten", {
       method: "GET",
       headers: {

@@ -14,7 +14,8 @@ export default defineEventHandler(async (event) => {
         setResponseHeaders(event, {
             "authorization": result[0].email,
             "authorization-key": result[0].password,
-            "authorization-role": result[0].functie
+            "authorization-role": result[0].functie,
+            "authorization-name": result[0].naam,
         });
 
         return {

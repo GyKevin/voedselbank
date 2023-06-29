@@ -8,7 +8,7 @@
         <input name="search" class="search" type="text" v-model="searchTerm" @input="search()" placeholder="Search Producten" />
       </div>
       <!-- magezijnmedewerker -->
-      <div class="buttons" v-permission="[0,1]">
+      <div class="buttons" v-if="perm == '0' || perm == '1'">
         <Button
           @click="() => navigateTo('/producten/new', { replace: true })"
           class="btn"
@@ -26,7 +26,7 @@
           <th>Naam</th>
           <th>Categorie ID</th>
           <th>Aantal</th>
-          <th v-permission="[0,1]">
+          <th v-if="perm == '0' || perm == '1'">
             Acties
           </th>
         </tr>
@@ -37,7 +37,7 @@
           <td>{{ product.naam }}</td>
           <td>{{ product.categorie_naam }}</td>
           <td>{{ product.aantal }}</td>
-          <td v-permission="[0,1]">
+          <td v-if="perm == '0' || perm == '1'">
             <Button
               @click="() => navigateTo(`/producten/edit/${product.ean}`, { replace: true  })"
               class="btn-x-small"
@@ -85,6 +85,11 @@ export default {
       error,
       refresh,
       searchTerm,
+    }
+  },
+  data() {
+    return {
+      perm: useCookie("Authorization-role")
     }
   },
   methods: {

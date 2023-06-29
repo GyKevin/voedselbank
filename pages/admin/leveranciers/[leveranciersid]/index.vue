@@ -17,8 +17,11 @@ export default {
     };
   },
   setup() {
-    const route = useRoute()
+    definePageMeta({
+      middleware: ["auth-0"],
+    });
 
+    const route = useRoute()
     const {
       data: leveranciers,
       pending,

@@ -5,10 +5,9 @@
     <div class="bannerBox">
       <!-- <img class="banner" src="~/assets/HomepageBanner.jpg" alt=""> -->
     </div>
-    <div class="welcomeMSG" v-permission:selected="2">
+    <div class="welcomeMSG">
       <img src="~/assets/Logo.png" alt="Logo" class="homepageLogo">
-    <h3 v-if="loggedIn === false">Welkom!</h3>
-    <h3 v-if="loggedIn === true">Welkom, {{ username }}!</h3>
+    <h3 class="welkom">Welkom, {{ username }}!</h3>
     <span class="slogan">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
        Dignissimos nisi sequi nulla delectus esse adipisci quidem modi tempore reprehenderit
         sint itaque assumenda, atque aperiam laudantium quae ad eos repellendus natus.
@@ -23,20 +22,31 @@ export default {
   // state
   data() {
     return {
-      username: useCookie("username"),
+      // slice first to @ in email
+      username: useCookie("Authorization-name"),
       loggedIn: false,
     };
   },
   mounted() {
-    const username = useCookie("username");
-    const cookieStatus = document.cookie.includes('user_id');
-      if(cookieStatus) {
-        this.loggedIn = true;
-      }
   },
   // actions
   methods: {
     
   },
 };
-</script>
+</script>         
+
+<style scoped>
+.welcomeMSG {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.welkom {
+  white-space: nowrap;
+}
+</style>
