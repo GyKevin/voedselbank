@@ -4,7 +4,6 @@ export default defineEventHandler(async (event) => {
     const con = getMysqlConnection();
     // Get the body and query from the event
     const body = await readBody(event)
-    console.log(body)
 
 
     const [result, fields] = await con.promise().execute("SELECT * FROM gebruikers WHERE email = ? AND password = ?", [body.email, body.password])

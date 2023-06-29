@@ -19,7 +19,6 @@ var Auth = (el: any, binding: any, vnode: any, oldVnode: any) => {
         const permissionRoles = value;
 
         const hasPermission = role == '0' || permissionRoles.includes(role);
-        console.log('hasPermission', hasPermission, role, permissionRoles, el)
 
         if (!hasPermission) {
             /* create replacement node */
@@ -31,7 +30,6 @@ var Auth = (el: any, binding: any, vnode: any, oldVnode: any) => {
             el.parentNode && el.parentNode.replaceChild(replacement, el);
         } else {
             if (!el.parentNode && vnode.ctx.$_permissionParentNode) {
-                console.log(vnode.ctx.$_permissionParentNode, el)
 
                 /* replace replacement node with element */
                 const slot = vnode.ctx.$_permissionParentNode.querySelector(`#vnode-${vnode.ctx.uid}`);

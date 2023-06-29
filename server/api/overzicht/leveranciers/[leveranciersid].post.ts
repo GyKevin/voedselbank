@@ -34,9 +34,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // console.log("leverancier: " + event.context.params.leveranciersid)
-  // console.log("body: " + body.id)
-
   if (parseInt(event.context.params.leveranciersid) !== body.id) {
     console.error("Hi wiljan :)")
     throw createError({

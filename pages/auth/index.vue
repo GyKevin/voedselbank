@@ -140,7 +140,6 @@ export default {
         }
       },
       onResponse({ response, options }) {
-        console.log(response.status);
         switch (response.status) {
           case 200:
             const auth = useCookie("Authorization", {
